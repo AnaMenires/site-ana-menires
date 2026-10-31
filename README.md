@@ -2,7 +2,7 @@
 
 Site pessoal de Ana Menires: marketing, tecnologia e estratégia.
 
-Página estática (HTML, CSS e JavaScript em um único `index.html`), sem build. Imagens em `img/` (WebP) e vídeos em `video/`.
+Página estática (HTML, CSS e JavaScript em um único `index.html`), sem build. Imagens em `assets/img/` (WebP) e vídeos em `assets/video/`.
 
 ## Publicar no GitHub Pages
 
