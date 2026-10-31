@@ -10,4 +10,6 @@ Página estática (HTML, CSS e JavaScript em um único `index.html`), sem build.
 2. Selecione a branch `main` e a pasta `/ (root)`.
 3. O site fica em `https://<seu-usuario>.github.io/<nome-do-repositorio>/`.
 
+O deploy é feito pela Vercel a cada push na branch `main`, no domínio anamenires.com.br.
+
 Para ver localmente: `python3 -m http.server` nesta pasta e abra `http://localhost:8000`.
