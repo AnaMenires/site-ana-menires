@@ -837,6 +837,9 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 @keyframes lp-scroll{0%,6%{transform:translateY(0)}94%,100%{transform:translateY(calc(-1 * var(--lp-d,0px)))}}
 @media (prefers-reduced-motion: reduce){.lp-view img{animation:none}}
 
+
+/* Diferencial na Visão geral */
+.fov-quote{margin-top:18px;padding:4px 0 4px 18px;border-left:3px solid var(--amber);font-family:var(--display);font-style:italic;font-size:clamp(1.35rem,2.2vw,1.65rem);line-height:1.3;color:var(--accent);max-width:34ch}
 </style>
 </head>
 <body>
@@ -923,6 +926,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
         <div>
           <h3>Ana Menires</h3>
           <p class="desc">Publicitária, pós-graduada em Inteligência de Negócios e Gestão de Pessoas. Formação técnica em Desenvolvimento Web. Coordeno um time de performance e construo sites, sistemas e automações com apoio de IA.</p>
+        <p class="fov-quote">Sei o que medir porque opero as contas. Sei construir porque programo.</p>
         </div>
         <div>
           <p class="label fov-label">Onde eu atuo</p>
@@ -1477,10 +1481,11 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
       <h3>Ferramentas que uso no dia a dia</h3>
       <div class="tabs" role="tablist" aria-label="Categorias de ferramentas">
         <button class="tab" type="button" role="tab" id="tt-0" aria-selected="true" aria-controls="tools-panel" data-k="0">Marketing e mídia</button>
-        <button class="tab" type="button" role="tab" id="tt-1" aria-selected="false" aria-controls="tools-panel" data-k="1">Desenvolvimento</button>
-        <button class="tab" type="button" role="tab" id="tt-2" aria-selected="false" aria-controls="tools-panel" data-k="2">IA e automação</button>
-        <button class="tab" type="button" role="tab" id="tt-3" aria-selected="false" aria-controls="tools-panel" data-k="3">Gestão</button>
-        <button class="tab" type="button" role="tab" id="tt-4" aria-selected="false" aria-controls="tools-panel" data-k="4">Outros</button>
+        <button class="tab" type="button" role="tab" id="tt-1" aria-selected="false" aria-controls="tools-panel" data-k="1">Dados e integrações</button>
+        <button class="tab" type="button" role="tab" id="tt-2" aria-selected="false" aria-controls="tools-panel" data-k="2">Desenvolvimento</button>
+        <button class="tab" type="button" role="tab" id="tt-3" aria-selected="false" aria-controls="tools-panel" data-k="3">IA e automação</button>
+        <button class="tab" type="button" role="tab" id="tt-4" aria-selected="false" aria-controls="tools-panel" data-k="4">Gestão</button>
+        <button class="tab" type="button" role="tab" id="tt-5" aria-selected="false" aria-controls="tools-panel" data-k="5">Outros</button>
       </div>
       <ul class="grid-t" id="tools-panel" role="tabpanel" aria-labelledby="tt-0">
         <li>Google Ads</li><li>Meta Ads</li><li>LinkedIn Ads</li><li>Google Ads Scripts</li><li>Google Analytics 4 (GA4)</li><li>Google Tag Manager (GTM)</li><li>Microsoft Clarity</li><li>Google Search Console</li><li>ChatGPT Ads</li><li>Meta Business Suite</li><li>TikTok Ads</li><li>Looker Studio</li><li>Google Meu Negócio</li><li>Pixel do Meta e API de Conversões</li><li>Google Merchant Center</li><li>YouTube Ads</li>
@@ -1491,7 +1496,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 </section>
 <script>
 (function(){
-  var sets=[["Google Ads", "Meta Ads", "LinkedIn Ads", "Google Ads Scripts", "Google Analytics 4 (GA4)", "Google Tag Manager (GTM)", "Microsoft Clarity", "Google Search Console", "ChatGPT Ads", "Meta Business Suite", "TikTok Ads", "Looker Studio", "Google Meu Negócio", "Pixel do Meta e API de Conversões", "Google Merchant Center", "YouTube Ads"], ["HTML5", "CSS3", "JavaScript", "React", "Node.js", "WordPress", "Elementor", "Git", "GitHub", "Vercel", "Supabase", "Neon", "Cloudflare", "VS Code", "Tailwind CSS"], ["Claude", "Claude Code", "ChatGPT", "MCP (Model Context Protocol)", "Engenharia de prompts", "Desenvolvimento assistido por IA", "Automação de fluxos com IA"], ["Notion", "Trello", "ClickUp", "mLabs", "Google Sheets", "Asana"], ["Canva", "LeadLovers", "RD Station", "Plataformas de automação de marketing"]];
+  var sets=[["Google Ads", "Meta Ads", "LinkedIn Ads", "Google Ads Scripts", "Google Analytics 4 (GA4)", "Google Tag Manager (GTM)", "Microsoft Clarity", "Google Search Console", "ChatGPT Ads", "Meta Business Suite", "TikTok Ads", "Looker Studio", "Google Meu Negócio", "Pixel do Meta e API de Conversões", "Google Merchant Center", "YouTube Ads"], ["Google Ads API (GAQL)", "Meta Marketing API", "OAuth 2.0", "Supabase (PostgreSQL)", "Row Level Security (RLS)", "Edge Functions (TypeScript/Deno)", "pg_cron e pg_net", "Supabase Realtime", "Supabase Auth", "Vault e Secrets", "Automação de dados de mídia paga"], ["HTML5", "CSS3", "JavaScript", "React", "Node.js", "WordPress", "Elementor", "Git", "GitHub", "Vercel", "Supabase", "Neon", "Cloudflare", "VS Code", "Tailwind CSS"], ["Claude", "Claude Code", "ChatGPT", "MCP (Model Context Protocol)", "Engenharia de prompts", "Desenvolvimento assistido por IA", "Automação de fluxos com IA"], ["Notion", "Trello", "ClickUp", "mLabs", "Google Sheets", "Asana"], ["Canva", "LeadLovers", "RD Station", "Plataformas de automação de marketing"]];
   var panel=document.getElementById('tools-panel'), tabs=document.querySelectorAll('#formacao .tab');
   function show(k){ tabs.forEach(function(t){t.setAttribute('aria-selected',String(+t.dataset.k===k));}); panel.setAttribute('aria-labelledby','tt-'+k); panel.replaceChildren(); sets[k].forEach(function(n){var li=document.createElement('li');li.textContent=n;panel.appendChild(li);}); }
   tabs.forEach(function(t){t.addEventListener('click',function(){show(+t.dataset.k);});});
