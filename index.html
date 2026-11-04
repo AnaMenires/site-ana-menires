@@ -538,6 +538,8 @@ footer .social svg{width:16px;height:16px;flex:none}
 .fpanel .focus b{font-weight:600;color:var(--accent)}
 .fpanel .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 .fpanel .live-link.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+#projetos article[id]{scroll-margin-top:84px}
+.todos-projetos{margin-top:64px;display:flex;justify-content:center}
 .case .live-link.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);margin-left:8px}
 @media (max-width:520px){.case .live-link.ghost{margin-left:0}}
 .fside{background:var(--hero);color:#F8F6FC;border-radius:24px;padding:32px;position:relative;overflow:hidden;display:grid;gap:22px}
@@ -855,7 +857,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
       <b>Ana Menires</b>
     </a>
     <nav class="nav" aria-label="Seções">
-      <a href="#projetos">Projetos</a><a href="#sobre">Sobre</a><a href="#lideranca-sec">Liderança</a><a href="#conteudo">Palestras</a><a href="#formacao">Formação</a>
+      <a href="/projetos">Projetos</a><a href="#sobre">Sobre</a><a href="#lideranca-sec">Liderança</a><a href="#conteudo">Palestras</a><a href="#formacao">Formação</a>
     </nav>
     <a class="btn btn-light" href="https://wa.me/5585998559462?text=Ol%C3%A1%20Ana%20Menires%2C%20vim%20pelo%20seu%20site%20e%20quero%20conversar." target="_blank" rel="noopener">Vamos conversar</a>
   </div>
@@ -1127,7 +1129,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 
     <div class="cases">
       <!-- Case 01 -->
-      <article class="case tilt flat">
+      <article id="case-saude" class="case tilt flat">
         <div class="tilt-text">
           <div class="case-meta"><span class="label">Case 01 · Tráfego pago · Saúde</span><span class="status"><i></i>Em andamento</span></div>
           <h3>Um exemplo de êxito no tráfego pago.</h3>
@@ -1171,7 +1173,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
             <div class="case-sep" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="#F5B83D" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="22 79" transform="rotate(-90 20 20)"/></svg></div>
 
       <!-- Case 02 -->
-      <article class="case tilt">
+      <article id="case-central" class="case tilt">
         <div class="tilt-text">
           <div class="case-meta"><span class="label">Case 02 · Dados em tempo real e integrações</span><span class="status"><i></i>Em uso</span></div>
           <h3>Central de Clientes</h3>
@@ -1198,7 +1200,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
       <div class="case-sep" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="#F5B83D" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="22 79" transform="rotate(-90 20 20)"/></svg></div>
 
       <!-- Case 03 -->
-      <article class="case tilt">
+      <article id="case-sites" class="case tilt">
         <div class="tilt-text">
           <div class="case-meta"><span class="label">Case 03 · Landing pages e conversão</span><span class="status"><i></i>Publicado</span></div>
           <h3>Da primeira visita à oportunidade de negócio.</h3>
@@ -1223,7 +1225,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
             <div class="case-sep" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="#F5B83D" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="22 79" transform="rotate(-90 20 20)"/></svg></div>
 
       <!-- Case 04 -->
-      <article class="case tilt">
+      <article id="case-dash" class="case tilt">
         <div class="tilt-text">
           <div class="case-meta"><span class="label">Case 04 · Dashboards e análise de dados</span><span class="status"><i></i>No ar</span></div>
           <h3>Dados precisam ajudar alguém a tomar uma decisão.</h3>
@@ -1247,7 +1249,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
             <div class="case-sep" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="#F5B83D" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="22 79" transform="rotate(-90 20 20)"/></svg></div>
 
       <!-- Case 05 -->
-      <article class="case tilt">
+      <article id="case-fluxo" class="case tilt">
         <div class="tilt-text">
           <div class="case-meta"><span class="label">Case 05 · Processos, sistemas e automações</span><span class="status wip"><i></i>Em fase de testes</span></div>
           <h3>Fluxo</h3>
@@ -1268,6 +1270,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
         </div>
       </article>
     </div>
+    <div class="todos-projetos"><a class="live-link" href="/projetos">Ver todos os projetos <span aria-hidden="true">→</span></a></div>
   </div>
 </section>
 
