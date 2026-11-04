@@ -61,23 +61,26 @@ a{color:inherit}
 .hero{background:var(--hero);color:var(--hero-fg);position:relative;overflow:hidden}
 .hero::before{content:"";position:absolute;inset:0;opacity:.05;pointer-events:none;
   background-image:linear-gradient(var(--hero-fg) 1px,transparent 1px),linear-gradient(90deg,var(--hero-fg) 1px,transparent 1px);background-size:40px 40px}
-.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 0;border-bottom:1px solid var(--hero-line);position:relative}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
-.brand b{font-family:var(--display);font-size:1.45rem;font-weight:600;line-height:1}
-.brand small{display:block;font-size:.72rem;color:var(--hero-muted);margin-top:2px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--hero-line);position:relative}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex:none}
+.brand b{font-family:var(--display);font-size:1.3rem;font-weight:600;line-height:1}
 html{scroll-behavior:smooth}
-.esq{display:flex;align-items:center;gap:18px;min-width:0}
-.menu{display:flex;align-items:center;gap:8px}
-.menu-link{font-size:.85rem;text-decoration:none;color:var(--hero-fg);padding:9px 16px;border-radius:999px;border:1px solid var(--hero-line);white-space:nowrap}
-.menu-link:hover{background:rgba(217,200,245,.12)}
-.menu-home{font-size:.85rem;font-weight:600;text-decoration:none;color:#1E1B2E;background:var(--amber);padding:9px 18px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 18px rgba(245,184,61,.28);transition:transform .15s ease}
-.menu-home:hover{transform:translateY(-1px)}
-.menu-home:focus-visible,.menu a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.nav{display:flex;gap:26px;font-size:.85rem}
+.nav a{text-decoration:none;color:var(--hero-muted);padding:4px 0}
+.nav a:hover{color:var(--hero-fg)}
+.nav a.on{color:var(--hero-fg);box-shadow:inset 0 -2px 0 var(--amber)}
+.btn-top{background:var(--hero-fg);color:var(--hero);text-decoration:none;border-radius:999px;padding:8px 18px;font-size:.82rem;font-weight:500;white-space:nowrap}
+.btn-top:hover{background:#fff}
+.nav a:focus-visible,.btn-top:focus-visible,.brand:focus-visible,.trilha a:focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:4px}
+.trilha{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:.85rem;color:var(--hero-muted)}
+.trilha a{color:var(--hero-muted);text-decoration:none}
+.trilha a:hover{color:var(--hero-fg);text-decoration:underline;text-underline-offset:3px}
+.trilha span{opacity:.5}
+.trilha b{color:var(--amber);font-weight:500}
 #seguranca{scroll-margin-top:16px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 .intro{padding:56px 0 64px;position:relative;max-width:760px}
-.intro .label{color:var(--amber)}
-.intro h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,6vw,4rem);line-height:1.05;margin:12px 0 18px}
+.intro h1{font-family:var(--display);font-weight:500;font-size:clamp(2.6rem,6vw,4rem);line-height:1.05;margin:18px 0 18px}
 .intro p{color:var(--hero-muted);margin:0;font-size:1.02rem}
 
 /* Galeria */
@@ -130,8 +133,9 @@ html{scroll-behavior:smooth}
   .galeria{padding:40px 0 64px}
   .wrap{padding:0 16px}
 }
-@media (max-width:560px){ .brand small{display:none} .brand b{font-size:1.2rem} .menu-link{padding:8px 12px;font-size:.78rem} .menu-home{padding:8px 13px;font-size:.78rem} }
-@media (max-width:400px){ .brand > span{display:none} }
+@media (max-width:900px){ .nav a{display:none} .nav a[href="#seguranca"]{display:inline;font-size:.8rem} }
+@media (max-width:420px){ .nav a[href="#seguranca"]{display:none} }
+@media (max-width:400px){ .brand b{font-size:1.15rem} .btn-top{padding:7px 14px} }
 @media (prefers-reduced-motion: reduce){ .card,.abrir span{transition:none} }
 </style>
 </head>
@@ -140,23 +144,23 @@ html{scroll-behavior:smooth}
 <header class="hero">
   <div class="wrap">
     <div class="top">
-      <div class="esq">
-        <a class="brand" href="/" aria-label="Ana Menires, voltar ao site">
-        <svg viewBox="0 0 260 260" width="38" height="38" aria-hidden="true">
+      <a class="brand" href="/" aria-label="Ana Menires, página inicial">
+        <svg viewBox="0 0 260 260" width="34" height="34" aria-hidden="true">
           <circle cx="130" cy="130" r="112" fill="none" stroke="rgba(217,200,245,.35)" stroke-width="14"/>
           <circle cx="130" cy="130" r="112" fill="none" stroke="#F5B83D" stroke-width="18" stroke-linecap="round" stroke-dasharray="150 554" transform="rotate(-90 130 130)"/>
           <text x="130" y="158" text-anchor="middle" font-family="Poppins, system-ui, sans-serif" font-size="84" font-weight="600" letter-spacing="-3" fill="#F8F6FC">AM</text>
         </svg>
-        <span><b>Ana Menires</b><small>Marketing · Tecnologia · Estratégia</small></span>
-        </a>
-        <a class="menu-home" href="/">← Página inicial</a>
-      </div>
-      <nav class="menu" aria-label="Navegação">
-        <a class="menu-link" href="#seguranca">Segurança dos dados</a>
+        <b>Ana Menires</b>
+      </a>
+      <nav class="nav" aria-label="Navegação">
+        <a href="/">Início</a><a href="/#projetos">Projetos</a><a class="on" href="/projetos/dashboards" aria-current="page">Dashboards</a><a href="#seguranca">Segurança dos dados</a>
       </nav>
+      <a class="btn-top" href="https://wa.me/5585998559462?text=Ol%C3%A1%2C%20Ana!%20Vi%20suas%20dashboards%20e%20quero%20conversar." target="_blank" rel="noopener">Vamos conversar</a>
     </div>
     <div class="intro">
-      <p class="label">Projetos · Dashboards</p>
+      <nav class="trilha" aria-label="Você está em">
+        <a href="/">Início</a><span aria-hidden="true">/</span><a href="/#projetos">Projetos</a><span aria-hidden="true">/</span><b aria-current="page">Dashboards</b>
+      </nav>
       <h1>Dados que ajudam alguém a decidir.</h1>
       <p>Dashboards que desenvolvi para acompanhar campanhas de Google Ads e Meta Ads, com os dados chegando sozinhos, sem planilha preenchida à mão. Escolha uma para abrir e navegar.</p>
     </div>
