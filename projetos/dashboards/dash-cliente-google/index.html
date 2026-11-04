@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src https://docs.google.com https://*.googleusercontent.com; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Dashboard Google Ads · Ana Menires</title>
+<link rel="canonical" href="https://anamenires.com.br/projetos/dashboards/dash-cliente-google">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<meta name="description" content="Dashboard de Google Ads aplicado em um projeto real, com dados puxados automaticamente da plataforma.">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --roxo:#5B2A86; --lilas:#D9C8F5; --ambar:#F5B83D;
+    --grafite:#1E1B2E; --offwhite:#F8F6FC; --branco:#FFFFFF;
+    --roxo-90:#4A2270; --linha:#E7DEF7; --suave:#5E5873;
+    --radius:16px; --sombra:0 1px 3px rgba(30,27,46,.05),0 8px 24px rgba(30,27,46,.05);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Poppins',system-ui,sans-serif;background:var(--offwhite);color:var(--grafite);line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+  .rotulo{font-family:'Inter',system-ui,sans-serif;font-weight:500;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+  h1,h2,h3{letter-spacing:-.02em;line-height:1.2}
+
+  /* ── CABEÇALHO DO PROJETO ── */
+  .projeto{background:var(--roxo);color:var(--offwhite)}
+  .barra{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid rgba(217,200,245,.18)}
+  .lockup{display:flex;align-items:center;gap:12px}
+  .lockup strong{display:block;font-weight:600;font-size:15px;line-height:1.2}
+  .lockup span{display:block;font-family:'Inter',sans-serif;font-weight:500;font-size:11px;color:var(--lilas)}
+  .ao-vivo{display:inline-flex;align-items:center;gap:8px;background:rgba(217,200,245,.1);border:1px solid rgba(217,200,245,.25);border-radius:999px;padding:7px 14px;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--offwhite);white-space:nowrap}
+  .ponto{width:8px;height:8px;border-radius:50%;background:var(--ambar);animation:pulso 2s infinite}
+  @keyframes pulso{0%{box-shadow:0 0 0 0 rgba(245,184,61,.6)}70%{box-shadow:0 0 0 9px rgba(245,184,61,0)}100%{box-shadow:0 0 0 0 rgba(245,184,61,0)}}
+  .ao-vivo.off .ponto{background:var(--lilas);animation:none}
+  .barra-acoes{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+  .voltar-galeria{color:var(--offwhite);text-decoration:none;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;padding:7px 14px;border-radius:999px;border:1px solid rgba(217,200,245,.25);white-space:nowrap}
+  .voltar-galeria:hover{background:rgba(217,200,245,.12)}
+
+  .intro{display:grid;grid-template-columns:1.7fr 1fr;gap:32px;align-items:center;padding:20px 0 16px}
+  .intro .rotulo{color:var(--lilas)}
+  .intro h1{font-size:clamp(22px,2.4vw,30px);font-weight:600;margin:6px 0 8px}
+  .intro p{color:var(--lilas);font-size:13.5px;max-width:760px;line-height:1.5}
+  .fichas{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .ficha{background:rgba(217,200,245,.08);border:1px solid rgba(217,200,245,.18);border-radius:10px;padding:7px 12px}
+  .ficha .rotulo{color:var(--lilas);font-size:9.5px}
+  .ficha b{display:block;font-weight:500;font-size:12.5px;color:var(--offwhite);margin-top:1px}
+
+  .abas{display:flex;gap:4px}
+  .aba{background:none;border:none;border-bottom:3px solid transparent;color:var(--lilas);font:600 14px 'Poppins',sans-serif;padding:9px 16px;cursor:pointer}
+  .aba:hover{color:var(--offwhite)}
+  .aba[aria-selected="true"]{color:var(--offwhite);border-bottom-color:var(--offwhite)}
+
+  /* ── DASH ── */
+  main{padding:28px 0 56px}
+  .painel{display:none}
+  .painel.ativo{display:block}
+
+  .filtros{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius);box-shadow:var(--sombra);padding:16px 20px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:18px}
+  .campo{display:flex;flex-direction:column;gap:6px}
+  .campo .rotulo{color:var(--suave);font-size:10.5px}
+  .campo select,.campo input{height:40px;padding:0 12px;border:1.5px solid var(--linha);border-radius:10px;font:500 13.5px 'Poppins',sans-serif;color:var(--grafite);background:var(--branco);min-width:140px;outline:none}
+  .campo select:focus,.campo input:focus{border-color:var(--roxo)}
+  .divisor{width:1px;height:40px;background:var(--linha)}
+  .btn{height:40px;padding:0 20px;border-radius:999px;font:600 13.5px 'Poppins',sans-serif;cursor:pointer;transition:background .15s}
+  .btn-roxo{background:var(--roxo);color:var(--offwhite);border:none}
+  .btn-roxo:hover{background:var(--roxo-90)}
+  .btn-linha{background:var(--branco);color:var(--roxo);border:1.5px solid var(--linha)}
+  .btn-linha:hover{border-color:var(--roxo)}
+  .periodo{font-size:14px;color:var(--suave);margin:0 0 16px}
+  .periodo strong{color:var(--grafite)}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px}
+  .kpi{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius);box-shadow:var(--sombra);padding:18px 20px}
+  .kpi .rotulo{color:var(--suave);font-size:10.5px}
+  .kpi b{display:block;font-size:27px;font-weight:700;margin:6px 0 4px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .kpi.destaque{background:var(--roxo);border-color:var(--roxo)}
+  .kpi.destaque .rotulo{color:var(--lilas)}
+  .kpi.destaque b{color:var(--offwhite)}
+  .delta{font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--suave)}
+  .delta.bom{color:var(--roxo)}
+  .kpi.destaque .delta{color:var(--lilas)}
+
+  .cartao{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius);box-shadow:var(--sombra);padding:22px}
+  .cartao-topo{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:14px}
+  .cartao h3{font-size:15px;font-weight:600}
+  .legenda{font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--suave)}
+  .contador{font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--roxo);background:var(--offwhite);border:1px solid var(--linha);padding:3px 10px;border-radius:999px}
+  .grade{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:16px}
+  svg.grafico{width:100%;height:auto;display:block}
+
+  .tabela-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+  th{font-family:'Inter',sans-serif;font-weight:500;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--suave);text-align:right;padding:10px 12px;border-bottom:1px solid var(--linha);white-space:nowrap;background:var(--offwhite)}
+  th:first-child,td:first-child{text-align:left}
+  td{padding:12px;border-bottom:1px solid var(--offwhite);text-align:right;white-space:nowrap}
+  tr:last-child td{border-bottom:none}
+  .nome-camp{font-weight:600}
+  .tag{display:inline-block;margin-left:8px;font-family:'Inter',sans-serif;font-weight:500;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--roxo);background:var(--offwhite);border:1px solid var(--linha);border-radius:999px;padding:2px 8px;vertical-align:middle}
+
+  /* HISTÓRICO */
+  .sec-titulo{display:flex;align-items:center;gap:8px;margin:6px 0 14px}
+  .sec-titulo::before{content:"";width:4px;height:16px;border-radius:2px;background:var(--roxo)}
+  .sec-titulo .rotulo{color:var(--suave)}
+  .top3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
+  .top{background:var(--branco);border:1.5px solid var(--roxo);border-radius:var(--radius);padding:20px;position:relative}
+  .top .pos{position:absolute;top:16px;right:18px;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--roxo);background:var(--offwhite);border:1px solid var(--linha);border-radius:999px;padding:2px 10px}
+  .top .num{font-size:30px;font-weight:700;color:var(--roxo);letter-spacing:-.02em}
+  .top .rotulo{color:var(--suave);font-size:10.5px}
+  .top h3{font-size:16px;margin:10px 0 12px}
+  .linha-m{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--offwhite)}
+  .linha-m:last-child{border-bottom:none}
+  .linha-m span:first-child{color:var(--suave)}
+  .linha-m span:last-child{font-weight:600;font-variant-numeric:tabular-nums}
+  .meses{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+  .mes{background:var(--branco);border:1px solid var(--linha);border-radius:var(--radius);padding:18px}
+  .mes h3{font-size:14.5px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--linha)}
+  .mes.marcado{border-color:var(--roxo)}
+
+  .estado{padding:56px 16px;text-align:center;color:var(--suave);font-size:14px}
+
+  footer{border-top:1px solid var(--linha);padding:20px 0;background:var(--branco)}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+  footer small{font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--suave)}
+  footer a{color:var(--roxo);text-decoration:none}
+
+  @media (max-width:980px){
+    .intro{grid-template-columns:1fr;gap:16px}
+    .kpis{grid-template-columns:1fr 1fr}
+    .grade,.top3{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    .divisor{display:none}
+    .campo,.campo select,.campo input{width:100%}
+    .kpi b{font-size:21px}
+    .intro{padding:14px 0 12px;gap:14px}
+    .intro p{font-size:13px}
+    .ao-vivo .txt-longo{display:none}
+  }
+
+  /* ── MENU DE PERÍODO ── */
+  .periodo-wrap{position:relative}
+  .btn-periodo{height:42px;min-width:220px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 14px 0 16px;border:1.5px solid var(--linha);border-radius:10px;background:var(--branco);font:600 14px 'Poppins',sans-serif;color:var(--grafite);cursor:pointer}
+  .btn-periodo:hover,.btn-periodo[aria-expanded="true"]{border-color:var(--roxo)}
+  .btn-periodo svg{width:16px;height:16px;stroke:var(--roxo);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .15s}
+  .btn-periodo[aria-expanded="true"] svg{transform:rotate(180deg)}
+  .menu{position:absolute;top:calc(100% + 6px);left:0;z-index:50;min-width:240px;background:var(--branco);border:1px solid var(--linha);border-radius:12px;box-shadow:0 12px 32px rgba(30,27,46,.14);padding:6px}
+  .menu[hidden]{display:none}
+  .menu-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;border-radius:8px;padding:9px 12px;font:500 13.5px 'Poppins',sans-serif;color:var(--grafite);cursor:pointer}
+  .menu-item::before{content:"";width:8px;height:8px;border-radius:50%;border:1.5px solid var(--linha);flex:none}
+  .menu-item[aria-checked="true"]{background:var(--offwhite);color:var(--roxo);font-weight:600}
+  .menu-item[aria-checked="true"]::before{background:var(--roxo);border-color:var(--roxo)}
+  .menu-item:hover:not(:disabled){background:var(--offwhite)}
+  .menu-item:disabled{color:var(--suave);opacity:.6;cursor:not-allowed}
+  .menu-sep{height:1px;background:var(--linha);margin:6px 4px}
+  .extra{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end}
+  .extra[hidden]{display:none}
+  .periodo-comp{display:inline-block;margin-left:10px;font-family:'Inter',sans-serif;font-weight:500;font-size:12px;color:var(--suave)}
+  .aviso-parcial{display:inline-block;margin-left:10px;font-family:'Inter',sans-serif;font-weight:500;font-size:11.5px;color:var(--roxo);background:var(--offwhite);border:1px solid var(--linha);border-radius:999px;padding:3px 10px}
+
+  .filtros{gap:12px}
+  .campo select,.campo input{min-width:122px}
+  .btn-periodo{min-width:186px}
+  .btn{padding:0 16px}
+</style>
+</head>
+<body>
+
+<header class="projeto">
+  <div class="wrap">
+    <div class="barra">
+      <div class="lockup">
+        <svg viewBox="0 0 260 260" width="34" height="34" role="img" aria-label="Logo Ana Menires">
+          <circle cx="130" cy="130" r="112" fill="none" stroke="#D9C8F5" stroke-width="18"/>
+          <circle cx="130" cy="130" r="112" fill="none" stroke="#F5B83D" stroke-width="18" stroke-linecap="round" stroke-dasharray="150 554" transform="rotate(-90 130 130)"/>
+          <text x="130" y="158" text-anchor="middle" font-family="Poppins, system-ui, sans-serif" font-size="84" font-weight="600" letter-spacing="-3" fill="#F8F6FC">AM</text>
+        </svg>
+        <div><strong>Ana Menires</strong><span>Marketing · Tecnologia · Estratégia</span></div>
+      </div>
+      <div class="barra-acoes"><a class="voltar-galeria" href="/projetos/dashboards">← Todas as dashs</a>
+      <span class="ao-vivo" id="status"><span class="ponto"></span><span>Conectando ao Google Ads…</span></span></div>
+    </div>
+
+    <div class="intro">
+      <div>
+        <span class="rotulo">Portfólio · Projeto real</span>
+        <h1>Dashboard de Google Ads em tempo real</h1>
+        <p>Este painel está em uso em um projeto real, com um cliente de serviços. Os dados vêm direto da conta do Google Ads e são atualizados automaticamente: os dias fechados uma vez por dia e o dia de hoje de hora em hora, sem nenhum preenchimento manual. Nome do cliente, das campanhas e da conta foram omitidos para preservar o cliente.</p>
+      </div>
+      <div class="fichas">
+        <div class="ficha"><span class="rotulo">Fonte dos dados</span><b>Google Ads (Scripts oficiais)</b></div>
+        <div class="ficha"><span class="rotulo">Atualização</span><b>Diária + parcial de hora em hora</b></div>
+        <div class="ficha"><span class="rotulo">Base intermediária</span><b>Google Sheets</b></div>
+        <div class="ficha"><span class="rotulo">Campanha</span><b>Rede de Pesquisa</b></div>
+      </div>
+    </div>
+
+    <nav class="abas" role="tablist">
+      <button class="aba" role="tab" aria-selected="true" data-aba="geral">Visão geral</button>
+      <button class="aba" role="tab" aria-selected="false" data-aba="historico">Histórico</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <!-- VISÃO GERAL -->
+    <section class="painel ativo" id="painel-geral" role="tabpanel">
+      <div class="filtros">
+        <div class="campo periodo-wrap">
+          <span class="rotulo">Período rápido</span>
+          <button class="btn-periodo" id="btn-periodo" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-periodo">
+            <span id="btn-periodo-txt">Últimos 7 dias</span>
+            <svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="menu" id="menu-periodo" role="menu" hidden></div>
+        </div>
+        <div class="divisor"></div>
+        <div class="campo"><span class="rotulo">Mês</span><select id="sel-mes"></select></div>
+        <div class="campo"><span class="rotulo">Ano</span><select id="sel-ano"></select></div>
+        <div class="divisor"></div>
+        <div class="campo"><span class="rotulo">Data início</span><input type="date" id="dt-ini"></div>
+        <div class="campo"><span class="rotulo">Data fim</span><input type="date" id="dt-fim"></div>
+        <button class="btn btn-roxo" id="btn-aplicar" type="button">Aplicar</button>
+      </div>
+      <p class="periodo" id="periodo"></p>
+      <div id="geral-corpo"><div class="estado">Buscando dados no Google Ads…</div></div>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="painel" id="painel-historico" role="tabpanel">
+      <div id="hist-corpo"><div class="estado">Buscando dados no Google Ads…</div></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <small>Dashboard desenvolvido por <strong>Ana Menires</strong> · Marketing · Tecnologia · Estratégia</small>
+    <small><a href="https://wa.me/5585998559462" target="_blank" rel="noopener noreferrer">WhatsApp (85) 99855-9462</a> · <a href="https://instagram.com/ana_menires" target="_blank" rel="noopener noreferrer">@ana_menires</a></small>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// MOTOR DE PERÍODOS (compartilhado entre as dashes)
+// Precisa de: dias = [{data, impr, cliques, conv, custo}]
+//             hoje = { linhas:[{hora, impr, cliques, conv, custo}], atualizado:'dd/mm/aaaa hh:mm' } | null
+// ═══════════════════════════════════════════════════════════════
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MES_CURTO = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+
+const PRESETS = [
+  { id: 'hoje',        rotulo: 'Hoje' },
+  { id: 'ontem',       rotulo: 'Ontem' },
+  { id: 'ult7',        rotulo: 'Últimos 7 dias' },
+  { id: 'ult14',       rotulo: 'Últimos 14 dias' },
+  { id: 'ult30',       rotulo: 'Últimos 30 dias' },
+  { id: 'mes_atual',   rotulo: 'Este mês' },
+  { id: 'mes_passado', rotulo: 'Mês passado' }
+];
+// Rótulos quando o período vem dos filtros de Mês/Ano ou de Data início/fim
+const ROTULO_EXTRA = { mes: 'Mês selecionado', custom: 'Período personalizado' };
+
+let dias = [];
+let hoje = null;
+let periodoAtual = 'ult7';
+
+// ── Formatação ──
+const nf  = (n, d = 0) => Number(n).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+const brl = n => 'R$ ' + nf(n, 2);
+const pct = n => nf(n * 100, 2) + '%';
+const dataBR  = d => String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+const dataCurta = d => String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0');
+const iso = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+const chaveMes = d => d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+const nomeMes = k => { const [y,m] = k.split('-'); return MESES[+m-1] + ' ' + y; };
+const hojeLocal = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
+const addDias = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
+const nDias = (a, b) => Math.round((b - a) / 86400000) + 1;
+
+// ── DOM seguro (nada de innerHTML com dados) ──
+function el(tag, cls, txt) { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; }
+const NS = 'http://www.w3.org/2000/svg';
+function sv(tag, at, txt) { const e = document.createElementNS(NS, tag); for (const k in at) e.setAttribute(k, at[k]); if (txt != null) e.textContent = txt; return e; }
+
+// ── Agregação ──
+function somar(lista) {
+  const t = lista.reduce((a, r) => ({ impr: a.impr + r.impr, cliques: a.cliques + r.cliques, conv: a.conv + r.conv, custo: a.custo + r.custo }), { impr:0, cliques:0, conv:0, custo:0 });
+  t.ctr  = t.impr ? t.cliques / t.impr : 0;
+  t.cpc  = t.cliques ? t.custo / t.cliques : 0;
+  t.cpa  = t.conv ? t.custo / t.conv : 0;
+  t.taxa = t.cliques ? t.conv / t.cliques : 0;
+  return t;
+}
+const meses = () => [...new Set(dias.map(r => chaveMes(r.data)))].sort();
+const entre = (a, b) => dias.filter(r => r.data >= a && r.data <= b);
+
+// ── Intervalos ──
+function intervalo(id) {
+  const h = hojeLocal(), y = h.getFullYear(), m = h.getMonth();
+  switch (id) {
+    case 'ontem':       return { ini: addDias(h, -1), fim: addDias(h, -1) };
+    case 'ult7':        return { ini: addDias(h, -7), fim: addDias(h, -1) };
+    case 'ult14':       return { ini: addDias(h, -14), fim: addDias(h, -1) };
+    case 'ult30':       return { ini: addDias(h, -30), fim: addDias(h, -1) };
+    case 'mes_atual':   return { ini: new Date(y, m, 1), fim: addDias(h, -1), mensal: true };
+    case 'mes_passado': return { ini: new Date(y, m - 1, 1), fim: new Date(y, m, 0), mensal: true };
+    case 'mes': {
+      const mm = +document.getElementById('sel-mes').value, yy = +document.getElementById('sel-ano').value;
+      return { ini: new Date(yy, mm, 1), fim: new Date(yy, mm + 1, 0), mensal: true };
+    }
+    case 'custom': {
+      const a = document.getElementById('dt-ini').value, b = document.getElementById('dt-fim').value;
+      if (!a || !b) return null;
+      const [ya, ma, da] = a.split('-').map(Number), [yb, mb, db] = b.split('-').map(Number);
+      return { ini: new Date(ya, ma - 1, da), fim: new Date(yb, mb - 1, db) };
+    }
+  }
+  return null;
+}
+function anteriorDe(it) {
+  if (it.mensal) {
+    const ini = new Date(it.ini.getFullYear(), it.ini.getMonth() - 1, 1);
+    // mês atual parcial compara com o mesmo número de dias do mês anterior
+    const fim = (it.fim.getDate() < new Date(it.fim.getFullYear(), it.fim.getMonth() + 1, 0).getDate())
+      ? addDias(ini, it.fim.getDate() - 1) : new Date(ini.getFullYear(), ini.getMonth() + 1, 0);
+    return { ini, fim };
+  }
+  const L = nDias(it.ini, it.fim);
+  return { ini: addDias(it.ini, -L), fim: addDias(it.ini, -1) };
+}
+
+// ── Menu de período (abre e fecha) ──
+function montarMenu() {
+  const menu = document.getElementById('menu-periodo');
+  menu.replaceChildren();
+  PRESETS.forEach(p => {
+    const b = el('button', 'menu-item', p.rotulo);
+    b.type = 'button'; b.setAttribute('role', 'menuitemradio');
+    b.dataset.id = p.id;
+    if (p.id === 'hoje' && !hoje) { b.disabled = true; b.textContent = 'Hoje (indisponível)'; }
+    b.setAttribute('aria-checked', String(p.id === periodoAtual));
+    b.addEventListener('click', () => escolher(p.id));
+    menu.appendChild(b);
+  });
+}
+function abrirMenu(abrir) {
+  const menu = document.getElementById('menu-periodo'), btn = document.getElementById('btn-periodo');
+  const aberto = abrir ?? menu.hidden;
+  menu.hidden = !aberto; btn.setAttribute('aria-expanded', String(aberto));
+}
+function escolher(id) {
+  periodoAtual = id;
+  abrirMenu(false);
+  montarMenu();
+  aplicar();
+}
+function montarFiltros() {
+  const selM = document.getElementById('sel-mes'), selA = document.getElementById('sel-ano');
+  MESES.forEach((n, i) => { const o = el('option', null, n); o.value = i; selM.appendChild(o); });
+  [...new Set(dias.map(r => r.data.getFullYear()))].forEach(y => { const o = el('option', null, y); o.value = y; selA.appendChild(o); });
+  const u = dias[dias.length - 1].data;
+  selM.value = u.getMonth(); selA.value = u.getFullYear();
+  const ini = document.getElementById('dt-ini'), fim = document.getElementById('dt-fim');
+  ini.min = fim.min = iso(dias[0].data); ini.max = fim.max = iso(hojeLocal());
+  const usarMes = () => { periodoAtual = 'mes'; montarMenu(); aplicar(); };
+  selM.addEventListener('change', usarMes); selA.addEventListener('change', usarMes);
+  document.getElementById('btn-aplicar').addEventListener('click', () => {
+    if (!ini.value || !fim.value) { usarMes(); return; }
+    periodoAtual = 'custom'; montarMenu(); aplicar();
+  });
+  document.getElementById('btn-periodo').addEventListener('click', e => { e.stopPropagation(); abrirMenu(); });
+  document.addEventListener('click', e => { if (!e.target.closest('.periodo-wrap')) abrirMenu(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') abrirMenu(false); });
+  montarMenu();
+}
+
+// ── Aplicar período ──
+function aplicar() {
+  const p = PRESETS.find(x => x.id === periodoAtual);
+  document.getElementById('btn-periodo-txt').textContent = p ? p.rotulo : ROTULO_EXTRA[periodoAtual];
+  const per = document.getElementById('periodo'); per.replaceChildren();
+
+  if (periodoAtual === 'hoje') {
+    const t = somar(hoje.linhas);
+    per.append('Exibindo: ', el('strong', null, 'Hoje, ' + dataBR(hojeLocal())), el('span', 'aviso-parcial', 'Parcial · atualizado às ' + (hoje.atualizado.split(' ')[1] || hoje.atualizado)));
+    renderGeral(hoje.linhas, t, null, { hoje: true });
+    return;
+  }
+
+  const it = intervalo(periodoAtual);
+  if (!it) { per.append('Escolha a data de início e fim e clique em Aplicar.'); renderGeral([], null, null, {}); return; }
+  const lista = entre(it.ini, it.fim);
+  const ant = anteriorDe(it), listaAnt = entre(ant.ini, ant.fim);
+  per.append('Exibindo: ', el('strong', null, dataBR(it.ini) + (nDias(it.ini, it.fim) > 1 ? ' a ' + dataBR(it.fim) : '')),
+    el('span', 'periodo-comp', 'comparado com ' + dataBR(ant.ini) + (nDias(ant.ini, ant.fim) > 1 ? ' a ' + dataBR(ant.fim) : '')));
+  renderGeral(lista, somar(lista), listaAnt.length ? somar(listaAnt) : null, { ini: it.ini, fim: it.fim });
+}
+
+// ── KPIs ──
+function kpi(rot, val, atual, ant, menorMelhor, destaque, notaFixa) {
+  const c = el('div', 'kpi' + (destaque ? ' destaque' : ''));
+  c.append(el('span', 'rotulo', rot), el('b', null, val));
+  let t = notaFixa || '', bom = false;
+  if (!notaFixa && ant) { const v = (atual - ant) / ant * 100; bom = menorMelhor ? v < 0 : v > 0; t = (v > 0 ? '↑ +' : v < 0 ? '↓ ' : '') + nf(v, 1) + '% vs período anterior'; }
+  c.appendChild(el('span', 'delta' + (bom ? ' bom' : ''), t || ' '));
+  return c;
+}
+
+// ── Gráficos ──
+function serieDiaria(lista, ini, fim) {
+  const mapa = new Map(lista.map(r => [r.data.getTime(), r]));
+  const out = [];
+  if (nDias(ini, fim) <= 92) {
+    for (let d = new Date(ini); d <= fim; d = addDias(d, 1)) out.push(mapa.get(d.getTime()) || { data: new Date(d), impr: 0, cliques: 0, conv: 0, custo: 0 });
+    return out.map(r => ({ rot: dataCurta(r.data), dica: dataBR(r.data), conv: r.conv, custo: r.custo }));
+  }
+  return lista.map(r => ({ rot: dataCurta(r.data), dica: dataBR(r.data), conv: r.conv, custo: r.custo }));
+}
+function graficoBarrasLinha(pts, aria) {
+  const W = 680, H = 230, P = { t: 16, r: 46, b: 26, l: 30 };
+  const n = pts.length;
+  const maxC = Math.max(1, ...pts.map(r => r.conv)), maxR = Math.max(1, ...pts.map(r => r.custo));
+  const bw = (W - P.l - P.r) / Math.max(n, 1), alt = H - P.t - P.b;
+  const s = sv('svg', { viewBox: `0 0 ${W} ${H}`, class: 'grafico', role: 'img', 'aria-label': aria });
+  [0, .5, 1].forEach(f => {
+    const y = P.t + alt * (1 - f);
+    s.appendChild(sv('line', { x1: P.l, x2: W - P.r, y1: y, y2: y, stroke: COR.grade }));
+    s.appendChild(sv('text', { x: P.l - 6, y: y + 4, 'text-anchor': 'end', 'font-size': 10, fill: COR.eixo, 'font-family': 'Inter,sans-serif' }, nf(maxC * f, maxC < 4 ? 1 : 0)));
+    s.appendChild(sv('text', { x: W - P.r + 6, y: y + 4, 'font-size': 10, fill: COR.eixo, 'font-family': 'Inter,sans-serif' }, 'R$' + nf(maxR * f)));
+  });
+  let linha = '';
+  const passo = n <= 10 ? 1 : n <= 31 ? 5 : Math.ceil(n / 8);
+  pts.forEach((r, i) => {
+    const h = alt * (r.conv / maxC), x = P.l + i * bw;
+    const b = sv('rect', { x: x + bw * .18, y: H - P.b - h, width: bw * .64, height: Math.max(h, r.conv ? 2 : 0), rx: 3, fill: COR.barra });
+    b.appendChild(sv('title', {}, `${r.dica} · ${nf(r.conv, 1)} conversões · ${brl(r.custo)}`));
+    s.appendChild(b);
+    linha += `${x + bw / 2},${P.t + alt * (1 - r.custo / maxR)} `;
+    if (i % passo === 0 || i === n - 1) s.appendChild(sv('text', { x: x + bw / 2, y: H - 8, 'text-anchor': 'middle', 'font-size': 10, fill: COR.eixo, 'font-family': 'Inter,sans-serif' }, r.rot));
+  });
+  if (n > 1) s.appendChild(sv('polyline', { points: linha.trim(), fill: 'none', stroke: COR.linha, 'stroke-width': 2, 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+  else if (n === 1) { const [x, y] = linha.trim().split(','); s.appendChild(sv('circle', { cx: x, cy: y, r: 4, fill: COR.linha })); }
+  return s;
+}
+function graficoMensal(ks) {
+  const W = 420, H = 230, P = { t: 24, r: 6, b: 26, l: 6 };
+  const d = ks.map(k => ({ k, c: somar(dias.filter(r => chaveMes(r.data) === k)).conv }));
+  const max = Math.max(1, ...d.map(x => x.c)), bw = (W - P.l - P.r) / Math.max(d.length, 1), alt = H - P.t - P.b;
+  const s = sv('svg', { viewBox: `0 0 ${W} ${H}`, class: 'grafico', role: 'img', 'aria-label': 'Conversões por mês' });
+  s.appendChild(sv('line', { x1: P.l, x2: W - P.r, y1: H - P.b, y2: H - P.b, stroke: COR.grade }));
+  const ultimo = ks[ks.length - 1];
+  d.forEach((x, i) => {
+    const h = alt * (x.c / max), px = P.l + i * bw + bw * .2, sel = x.k === ultimo;
+    s.appendChild(sv('rect', { x: px, y: H - P.b - h, width: bw * .6, height: h, rx: 6, fill: sel ? COR.destaque : COR.barra }));
+    s.appendChild(sv('text', { x: px + bw * .3, y: H - P.b - h - 7, 'text-anchor': 'middle', 'font-size': 12, 'font-weight': 600, fill: sel ? COR.destaque : COR.eixo, 'font-family': FONTE_TITULO }, nf(x.c)));
+    s.appendChild(sv('text', { x: px + bw * .3, y: H - 8, 'text-anchor': 'middle', 'font-size': 11, fill: COR.eixo, 'font-family': 'Inter,sans-serif' }, MES_CURTO[+x.k.split('-')[1] - 1]));
+  });
+  return s;
+}
+
+// ── Visão geral ──
+function renderGeral(lista, t, a, op) {
+  const corpo = document.getElementById('geral-corpo'); corpo.replaceChildren();
+  if (!lista.length) {
+    corpo.appendChild(el('div', 'estado', op.hoje ? 'Ainda não há dados de hoje. O Google Ads costuma mostrar as primeiras horas com algumas horas de atraso.' : 'Nenhum dado para o período selecionado.'));
+    return;
+  }
+  const nota = op.hoje ? 'parcial de hoje' : null;
+  const k = el('div', 'kpis');
+  k.append(
+    kpi('Impressões', nf(t.impr), t.impr, a && a.impr, false, false, nota),
+    kpi('Cliques', nf(t.cliques), t.cliques, a && a.cliques, false, false, nota),
+    kpi('CTR', pct(t.ctr), t.ctr, a && a.ctr, false, false, nota),
+    kpi('CPC médio', brl(t.cpc), t.cpc, a && a.cpc, true, false, nota),
+    kpi('Conversões', nf(t.conv, 1), t.conv, a && a.conv, false, true, nota),
+    kpi('Custo total', brl(t.custo), t.custo, a && a.custo, false, false, nota),
+    kpi('CPA', brl(t.cpa), t.cpa, a && a.cpa, true, false, nota),
+    kpi('Taxa de conversão', pct(t.taxa), t.taxa, a && a.taxa, false, false, nota)
+  );
+  corpo.appendChild(k);
+
+  const g = el('div', 'grade');
+  const c1 = el('div', 'cartao'), t1 = el('div', 'cartao-topo');
+  if (op.hoje) {
+    t1.append(el('h3', null, 'Hoje, hora a hora'), el('span', 'legenda', 'barras: conversões · linha: custo'));
+    c1.append(t1, graficoBarrasLinha(lista.map(r => ({ rot: r.hora, dica: 'Hoje ' + r.hora, conv: r.conv, custo: r.custo })), 'Conversões e investimento por hora hoje'));
+  } else {
+    t1.append(el('h3', null, 'Conversões e investimento por dia'), el('span', 'legenda', 'barras: conversões · linha: custo'));
+    c1.append(t1, graficoBarrasLinha(serieDiaria(lista, op.ini, op.fim), 'Conversões e investimento por dia'));
+  }
+  const c2 = el('div', 'cartao'), t2 = el('div', 'cartao-topo');
+  t2.append(el('h3', null, 'Conversões por mês'), el('span', 'legenda', 'últimos 6 meses fechados'));
+  c2.append(t2, graficoMensal(meses().slice(-6)));
+  g.append(c1, c2); corpo.appendChild(g);
+
+  corpo.appendChild(tabelaCampanhas(lista, t, op));
+}
+
+// ── Histórico ──
+function linhaM(rot, val) { const d = el('div', 'linha-m'); d.append(el('span', null, rot), el('span', null, val)); return d; }
+function renderHistorico() {
+  const corpo = document.getElementById('hist-corpo'); corpo.replaceChildren();
+  const lista = meses().map(k => ({ k, t: somar(dias.filter(r => chaveMes(r.data) === k)) }));
+  const top = [...lista].sort((a, b) => b.t.conv - a.t.conv).slice(0, 3);
+  const topK = top.map(x => x.k);
+  const s1 = el('div', 'sec-titulo'); s1.appendChild(el('span', 'rotulo', 'Top 3 meses com mais conversões'));
+  const g = el('div', 'top3');
+  top.forEach((x, i) => {
+    const c = el('div', 'top');
+    c.append(el('span', 'pos', (i + 1) + 'º lugar'), el('div', 'num', nf(x.t.conv, 1)), el('span', 'rotulo', 'Conversões'), el('h3', null, nomeMes(x.k)),
+      linhaM('Cliques', nf(x.t.cliques)), linhaM('CPC médio', brl(x.t.cpc)), linhaM('CPA', brl(x.t.cpa)), linhaM('Custo total', brl(x.t.custo)), linhaM('Taxa conv.', pct(x.t.taxa)));
+    g.appendChild(c);
+  });
+  const s2 = el('div', 'sec-titulo'); s2.appendChild(el('span', 'rotulo', 'Todos os meses'));
+  const m = el('div', 'meses');
+  lista.slice().reverse().forEach(x => {
+    const c = el('div', 'mes' + (topK.includes(x.k) ? ' marcado' : ''));
+    c.append(el('h3', null, nomeMes(x.k)), linhaM('Cliques', nf(x.t.cliques)), linhaM('CPC médio', brl(x.t.cpc)), linhaM('Conversões', nf(x.t.conv, 1)), linhaM('CPA', brl(x.t.cpa)), linhaM('Taxa conv.', pct(x.t.taxa)), linhaM('Custo total', brl(x.t.custo)));
+    m.appendChild(c);
+  });
+  corpo.append(s1, g, s2, m);
+}
+
+// ── Abas ──
+document.querySelectorAll('.aba').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('.aba').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+  document.querySelectorAll('.painel').forEach(p => p.classList.toggle('ativo', p.id === 'painel-' + b.dataset.aba));
+}));
+
+// ═══════════════════════════════════════════════════════════════
+// FONTES (portfólio: planilha ANÔNIMA publicada como CSV)
+// Nunca coloque aqui o link da planilha original do cliente.
+// ═══════════════════════════════════════════════════════════════
+const CSV_DIARIO = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTxmQUdlRpGbFrZGSa3BTu3zhzYG900KfZbgflO9hIEcs4R9oozqn7JL8Mu5CY7qq-eLk8JfkEWy3ub/pub?gid=2118489797&single=true&output=csv';
+const CSV_HOJE   = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTxmQUdlRpGbFrZGSa3BTu3zhzYG900KfZbgflO9hIEcs4R9oozqn7JL8Mu5CY7qq-eLk8JfkEWy3ub/pub?gid=2028007207&single=true&output=csv';
+const RECARREGAR_A_CADA_MIN = 10;
+const NOME_CAMPANHA = 'Campanha de Pesquisa';
+
+const COR = { grade: '#E7DEF7', eixo: '#5E5873', barra: '#D9C8F5', linha: '#5B2A86', destaque: '#5B2A86' };
+const FONTE_TITULO = 'Poppins,sans-serif';
+let iniciado = false;
+
+function lerCSV(t) {
+  const L = []; let c = '', l = [], q = false;
+  for (let i = 0; i < t.length; i++) {
+    const ch = t[i];
+    if (q) { if (ch === '"' && t[i+1] === '"') { c += '"'; i++; } else if (ch === '"') q = false; else c += ch; }
+    else if (ch === '"') q = true;
+    else if (ch === ',') { l.push(c); c = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && t[i+1] === '\n') i++; l.push(c); L.push(l); l = []; c = ''; }
+    else c += ch;
+  }
+  if (c || l.length) { l.push(c); L.push(l); }
+  return L;
+}
+function numero(s) {
+  s = String(s || '').trim(); if (!s) return 0;
+  if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+  const n = Number(s); return Number.isFinite(n) ? n : 0;
+}
+function lerData(s) {
+  s = String(s || '').trim();
+  let m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); if (m) return new Date(+m[3], +m[2]-1, +m[1]);
+  m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);         if (m) return new Date(+m[1], +m[2]-1, +m[3]);
+  return null;
+}
+
+// TRAVA: só aceita exatamente as colunas esperadas, na ordem. Qualquer coluna a mais bloqueia tudo.
+function validar(linhas, esperado) {
+  const cab = (linhas[0] || []).map(c => c.trim()).filter(c => c !== '');
+  if (cab.length !== esperado.length || cab.some((c, i) => c !== esperado[i])) return false;
+  return !linhas.slice(1).some(l => l.slice(esperado.length).some(c => c.trim() !== ''));
+}
+async function baixar(url) {
+  const r = await fetch(url + (url.includes('?') ? '&' : '?') + 't=' + Date.now(), { cache: 'no-store', referrerPolicy: 'no-referrer' });
+  if (!r.ok) throw new Error('rede');
+  return lerCSV(await r.text());
+}
+
+async function buscar() {
+  try {
+    const L = await baixar(CSV_DIARIO);
+    if (!validar(L, ['Data', 'Impressões', 'Cliques', 'Conversões', 'Custo Total'])) return falha('Dados bloqueados por segurança: a estrutura da fonte mudou.');
+    const mapa = new Map();
+    L.slice(1).forEach(l => {
+      const d = lerData(l[0]); if (!d) return;
+      mapa.set(d.getTime(), { data: d, impr: numero(l[1]), cliques: numero(l[2]), conv: numero(l[3]), custo: numero(l[4]) });
+    });
+    dias = [...mapa.values()].sort((a, b) => a.data - b.data);
+    if (!dias.length) throw new Error('vazio');
+  } catch (e) { return falha('Não foi possível carregar os dados agora. Tente novamente em alguns minutos.'); }
+
+  // Hoje é opcional: se falhar, o resto da dash funciona normalmente
+  hoje = null;
+  if (CSV_HOJE.startsWith('https://docs.google.com/')) {
+    try {
+      const H = await baixar(CSV_HOJE);
+      if (validar(H, ['Data', 'Hora', 'Impressões', 'Cliques', 'Conversões', 'Custo Total', 'Atualizado Em'])) {
+        const dHoje = hojeLocal().getTime();
+        const linhas = H.slice(1).filter(l => { const d = lerData(l[0]); return d && d.getTime() === dHoje && /^\d{2}:\d{2}$/.test(String(l[1]).trim()); })
+          .map(l => ({ hora: l[1].trim(), impr: numero(l[2]), cliques: numero(l[3]), conv: numero(l[4]), custo: numero(l[5]) }));
+        const at = String((H[1] || [])[6] || '').trim();
+        hoje = { linhas, atualizado: /^\d{2}\/\d{2}\/\d{4} \d{2}:\d{2}$/.test(at) ? at : '' };
+      }
+    } catch (e) { hoje = null; }
+  }
+  if (!hoje && periodoAtual === 'hoje') periodoAtual = 'ult30';
+
+  const ultimo = dias[dias.length - 1].data;
+  setStatus(true, 'Ao vivo', ' · Google Ads até ' + dataBR(ultimo) + (hoje && hoje.atualizado ? ' · hoje às ' + hoje.atualizado.split(' ')[1] : ''));
+  if (!iniciado) { montarFiltros(); iniciado = true; } else montarMenu();
+  aplicar();
+  renderHistorico();
+}
+
+function setStatus(ok, curto, longo) {
+  const s = document.getElementById('status');
+  s.classList.toggle('off', !ok);
+  s.replaceChildren();
+  s.append(el('span', 'ponto'), el('span', null, curto), el('span', 'txt-longo', longo || ''));
+}
+function falha(msg) {
+  setStatus(false, 'Indisponível no momento');
+  ['geral-corpo', 'hist-corpo'].forEach(id => document.getElementById(id).replaceChildren(el('div', 'estado', msg)));
+}
+
+// Tabela de campanhas (nome genérico fixo: nunca vem dos dados)
+function tabelaCampanhas(lista, t) {
+  const c3 = el('div', 'cartao'), t3 = el('div', 'cartao-topo');
+  t3.append(el('h3', null, 'Campanhas'), el('span', 'contador', '1 campanha'));
+  const w = el('div', 'tabela-wrap'), tb = el('table'), th = el('thead'), tr = el('tr');
+  ['Campanha', 'Impressões', 'Cliques', 'CTR', 'CPC médio', 'Conversões', 'CPA', 'Taxa conv.', 'Custo'].forEach(h => tr.appendChild(el('th', null, h)));
+  th.appendChild(tr); tb.appendChild(th);
+  const bd = el('tbody'), lin = el('tr'), nome = el('td');
+  nome.append(el('span', 'nome-camp', NOME_CAMPANHA), el('span', 'tag', 'Search'));
+  lin.appendChild(nome);
+  [nf(t.impr), nf(t.cliques), pct(t.ctr), brl(t.cpc), nf(t.conv, 1), brl(t.cpa), pct(t.taxa), brl(t.custo)].forEach(v => lin.appendChild(el('td', null, v)));
+  bd.appendChild(lin); tb.appendChild(bd); w.appendChild(tb); c3.append(t3, w);
+  return c3;
+}
+
+buscar();
+setInterval(buscar, RECARREGAR_A_CADA_MIN * 60 * 1000);
+
+</script>
+</body>
+</html>
