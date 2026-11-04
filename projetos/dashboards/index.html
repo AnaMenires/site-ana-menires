@@ -66,12 +66,13 @@ a{color:inherit}
 .brand b{font-family:var(--display);font-size:1.45rem;font-weight:600;line-height:1}
 .brand small{display:block;font-size:.72rem;color:var(--hero-muted);margin-top:2px}
 html{scroll-behavior:smooth}
+.esq{display:flex;align-items:center;gap:18px;min-width:0}
 .menu{display:flex;align-items:center;gap:8px}
 .menu-link{font-size:.85rem;text-decoration:none;color:var(--hero-fg);padding:9px 16px;border-radius:999px;border:1px solid var(--hero-line);white-space:nowrap}
 .menu-link:hover{background:rgba(217,200,245,.12)}
 .menu-home{font-size:.85rem;font-weight:600;text-decoration:none;color:#1E1B2E;background:var(--amber);padding:9px 18px;border-radius:999px;white-space:nowrap;box-shadow:0 6px 18px rgba(245,184,61,.28);transition:transform .15s ease}
 .menu-home:hover{transform:translateY(-1px)}
-.menu a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.menu-home:focus-visible,.menu a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
 #seguranca{scroll-margin-top:16px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 .intro{padding:56px 0 64px;position:relative;max-width:760px}
@@ -139,17 +140,19 @@ html{scroll-behavior:smooth}
 <header class="hero">
   <div class="wrap">
     <div class="top">
-      <a class="brand" href="/" aria-label="Ana Menires, voltar ao site">
+      <div class="esq">
+        <a class="brand" href="/" aria-label="Ana Menires, voltar ao site">
         <svg viewBox="0 0 260 260" width="38" height="38" aria-hidden="true">
           <circle cx="130" cy="130" r="112" fill="none" stroke="rgba(217,200,245,.35)" stroke-width="14"/>
           <circle cx="130" cy="130" r="112" fill="none" stroke="#F5B83D" stroke-width="18" stroke-linecap="round" stroke-dasharray="150 554" transform="rotate(-90 130 130)"/>
           <text x="130" y="158" text-anchor="middle" font-family="Poppins, system-ui, sans-serif" font-size="84" font-weight="600" letter-spacing="-3" fill="#F8F6FC">AM</text>
         </svg>
         <span><b>Ana Menires</b><small>Marketing · Tecnologia · Estratégia</small></span>
-      </a>
+        </a>
+        <a class="menu-home" href="/">← Página inicial</a>
+      </div>
       <nav class="menu" aria-label="Navegação">
         <a class="menu-link" href="#seguranca">Segurança dos dados</a>
-        <a class="menu-home" href="/">← Página inicial</a>
       </nav>
     </div>
     <div class="intro">
