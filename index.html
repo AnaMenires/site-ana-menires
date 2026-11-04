@@ -538,6 +538,8 @@ footer .social svg{width:16px;height:16px;flex:none}
 .fpanel .focus b{font-weight:600;color:var(--accent)}
 .fpanel .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 .fpanel .live-link.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.case .live-link.ghost{background:transparent;color:var(--accent);border:1px solid var(--line);margin-left:8px}
+@media (max-width:520px){.case .live-link.ghost{margin-left:0}}
 .fside{background:var(--hero);color:#F8F6FC;border-radius:24px;padding:32px;position:relative;overflow:hidden;display:grid;gap:22px}
 .fside::before{content:"";position:absolute;width:280px;height:280px;right:-100px;top:-100px;border-radius:50%;border:3px solid rgba(217,200,245,.2);border-bottom-color:#F5B83D;transform:rotate(25deg)}
 .fside > *{position:relative}
@@ -1208,6 +1210,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Conexão direta com as campanhas de tráfego pago</span></li>
           </ul>
           <a class="live-link" href="https://flashextintores.com/" target="_blank" rel="noopener">Ver o site do cliente no ar <span aria-hidden="true">↗</span></a>
+          <a class="live-link ghost" href="/projetos/sites">Ver todos os sites <span aria-hidden="true">→</span></a>
         </div>
         <div class="stage3d">
           <figure class="browser3d">
