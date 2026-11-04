@@ -96,6 +96,18 @@ a{color:inherit}
 .card:hover .abrir span{transform:translateX(3px)}
 .abrir span{transition:transform .2s ease}
 
+.seguranca{background:var(--surface);border-top:1px solid var(--line);padding:72px 0}
+.seg-head{max-width:680px}
+.seg-head .label{color:var(--accent)}
+.seg-head h2{font-family:var(--display);font-weight:500;font-size:clamp(2rem,4vw,2.8rem);line-height:1.1;margin:10px 0 14px}
+.seg-head p{margin:0;color:var(--muted)}
+.seg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;margin-top:44px}
+.seg-item{border-top:2px solid var(--accent);padding-top:18px}
+.seg-item svg{width:26px;height:26px;color:var(--accent)}
+.seg-item h3{font-size:1rem;font-weight:600;margin:12px 0 6px}
+.seg-item p{margin:0;font-size:.9rem;color:var(--muted)}
+@media (max-width:980px){.seg-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.seg-grid{grid-template-columns:1fr}.seguranca{padding:52px 0}}
 .cta{border-top:1px solid var(--line);padding:40px 0 56px}
 .cta .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .cta p{margin:0;max-width:560px}
@@ -172,6 +184,38 @@ a{color:inherit}
     </div>
   </div>
 </main>
+
+<section class="seguranca" aria-labelledby="seg-titulo">
+  <div class="wrap">
+    <div class="seg-head">
+      <p class="label">Segurança dos dados</p>
+      <h2 id="seg-titulo">Projeto real, dado protegido.</h2>
+      <p>Estas dashs nasceram de trabalhos reais. Para mostrá-las aqui, separei o que é vitrine do que é dado de cliente. Nada que identifique um cliente sai do ambiente original.</p>
+    </div>
+    <div class="seg-grid">
+      <div class="seg-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/><path d="M9.9 5.1A9.8 9.8 0 0 1 12 5c5 0 9 4.5 10 7a12.6 12.6 0 0 1-2.6 3.6M6.1 6.1C3.9 7.6 2.5 9.8 2 12c1 2.5 5 7 10 7a9.6 9.6 0 0 0 4.2-1"/></svg>
+        <h3>Anonimizado na origem</h3>
+        <p>Na dash de Google Ads, os números são reais, mas o nome do cliente, das campanhas e da conta foram retirados antes de chegar à página.</p>
+      </div>
+      <div class="seg-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M9 10v10"/></svg>
+        <h3>Uma camada no meio</h3>
+        <p>A página nunca acessa a conta de anúncios. Ela só lê uma planilha intermediária, que contém apenas os indicadores já anonimizados. A planilha original do cliente não é exposta.</p>
+      </div>
+      <div class="seg-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Demonstração isolada</h3>
+        <p>A Central de Clientes aberta aqui é uma cópia com clientes e números fictícios. Ela não se conecta a nenhum banco de dados, bloqueia conexões externas e não salva nada.</p>
+      </div>
+      <div class="seg-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        <h3>O sistema real fica fechado</h3>
+        <p>A versão em uso exige login, tem níveis de acesso por pessoa e mantém as credenciais das contas de anúncio no servidor, longe do navegador.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="cta">
   <div class="wrap">
