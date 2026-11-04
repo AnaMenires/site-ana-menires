@@ -840,6 +840,9 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 
 /* Diferencial na Visão geral */
 .fov-quote{margin-top:18px;padding:4px 0 4px 18px;border-left:3px solid var(--amber);font-family:var(--display);font-style:italic;font-size:clamp(1.35rem,2.2vw,1.65rem);line-height:1.3;color:var(--accent);max-width:34ch}
+
+.chips.stack{margin-top:22px}
+.demo-note{margin-top:10px;font-size:.8rem;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1113,7 +1116,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
     <div class="sec-head">
       <p class="label">Projetos selecionados</p>
       <h2>Alguns projetos que me orgulho de ter feito.</h2>
-      <p>Quatro cases reais, de campanhas de tráfego a sistemas sob medida, com o contexto, o que foi feito e o que mudou.</p>
+      <p>Cinco cases reais, de campanhas de tráfego a sistemas sob medida, com o contexto, o que foi feito e o que mudou.</p>
     </div>
 
     <div class="cases">
@@ -1212,7 +1215,34 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
       <!-- Case 04 -->
       <article class="case tilt">
         <div class="tilt-text">
-          <div class="case-meta"><span class="label">Case 04 · Processos, sistemas e automações</span><span class="status wip"><i></i>Em fase de testes</span></div>
+          <div class="case-meta"><span class="label">Case 04 · Dados em tempo real e integrações</span><span class="status"><i></i>Em uso</span></div>
+          <h3>Central de Clientes</h3>
+          <p class="sub">O desempenho de cada cliente em uma tela, atualizado sozinho.</p>
+          <p class="desc">Dashboard interno para acompanhar, no dia a dia, o desempenho dos clientes de tráfego pago. Os dados saem direto das contas de Google Ads e Meta Ads pelas APIs oficiais, sem planilha e sem preenchimento manual. O que antes pedia abrir conta por conta agora aparece em uma visão só, com os problemas já apontados.</p>
+          <ul class="checks">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Conexão com Google Ads e Meta Ads via API, com coleta automática a cada 30 minutos</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>A tela se atualiza sozinha quando chegam dados novos, sem recarregar a página</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Alertas de saldo baixo, custo por conversão acima da meta e orçamento fora do ritmo</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l4 4 10-10"/></svg><span>Dash por cliente, ranking, programação de posts e equipe com níveis de acesso</span></li>
+          </ul>
+          <div class="chips stack" aria-label="Tecnologias usadas"><span>HTML, CSS e JavaScript</span><span>Google Ads API</span><span>Meta Marketing API</span><span>Supabase</span><span>Edge Functions</span><span>Realtime</span><span>Vercel</span></div>
+          <a class="live-link" href="https://painel-demo-ana.vercel.app" target="_blank" rel="noopener">Abrir a demonstração <span aria-hidden="true">↗</span></a>
+          <p class="demo-note">A demonstração usa clientes e números fictícios.</p>
+        </div>
+        <div class="stage3d">
+          <figure class="browser3d">
+            <div class="b3-bar" aria-hidden="true"><i></i><i></i><i></i><span>central de clientes</span></div>
+            <video src="assets/video/central-clientes.mp4" poster="assets/img/central-clientes-poster.webp" muted loop playsinline preload="none" data-auto width="960" height="522" aria-label="Navegação pela Central de Clientes com dados fictícios: alertas, dashboard por cliente, orçamento do mês, programação de posts e cadastro"></video>
+          </figure>
+        </div>
+      </article>
+
+      <div class="case-sep" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="var(--line)" stroke-width="2"/><circle cx="20" cy="20" r="16" fill="none" stroke="#F5B83D" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="22 79" transform="rotate(-90 20 20)"/></svg></div>
+
+      <!-- Case 05 -->
+      <article class="case tilt">
+        <div class="tilt-text">
+          <div class="case-meta"><span class="label">Case 05 · Processos, sistemas e automações</span><span class="status wip"><i></i>Em fase de testes</span></div>
           <h3>Fluxo</h3>
           <p class="sub">Menos esforço operacional. Mais clareza sobre o trabalho.</p>
           <p class="desc">Plataforma de gestão para substituir Trello e ClickUp em uma agência de marketing. O ponto de partida foi o processo: entender como ele funciona hoje, identificar gargalos e avaliar onde uma ferramenta própria geraria valor.</p>
