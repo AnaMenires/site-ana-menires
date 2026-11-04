@@ -10,3 +10,9 @@
 #btn-importar { display: none !important; }
 /* Sincronizações fica fora da demo */
 a[data-rota="sync"], section[data-pagina="sync"] { display: none !important; }
+/* Voltar ao site, logo abaixo da marca */
+a.lockup { text-decoration: none; }
+.btn-voltar-site { display: inline-flex; align-items: center; justify-content: center; gap: 6px; margin: -14px 8px 0; padding: 9px 14px;
+  border-radius: 999px; background: var(--ambar); color: var(--grafite); font-weight: 600; font-size: 13px; text-decoration: none; }
+.btn-voltar-site:hover { filter: brightness(1.06); }
+.btn-voltar-site:focus-visible { outline: 2px solid var(--offwhite); outline-offset: 2px; }
