@@ -137,6 +137,8 @@ html{scroll-behavior:smooth}
 @media (max-width:420px){ .nav a[href="#seguranca"]{display:none} }
 @media (max-width:400px){ .brand b{font-size:1.15rem} .btn-top{padding:7px 14px} }
 @media (prefers-reduced-motion: reduce){ .card,.abrir span{transition:none} }
+.card .resultado{margin:0;font-size:.9rem;color:var(--fg)}
+.card .resultado b{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -185,7 +187,7 @@ html{scroll-behavior:smooth}
         </div>
       </a>
 
-      <a class="card" href="/projetos/dashboards/dash-painel-dos-clientes">
+      <a class="card" href="/projetos/dashboards/central-de-clientes">
         <div class="tela">
           <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>central de clientes · uso interno</span></div>
           <video src="/assets/video/central-clientes.mp4" poster="/assets/img/central-clientes-poster.webp" autoplay muted loop playsinline preload="metadata" width="960" height="522" aria-hidden="true"></video>
@@ -194,8 +196,9 @@ html{scroll-behavior:smooth}
           <div class="meta"><span class="label">Uso interno</span><span class="selo"><i></i>Demonstração · dados fictícios</span></div>
           <h2>Central de Clientes</h2>
           <p>Painel interno para acompanhar todos os clientes de tráfego pago. Conecta Google Ads e Meta Ads por API, aponta saldo baixo, custo acima da meta e orçamento fora do ritmo, e reúne a programação de posts.</p>
+          <p class="resultado"><b>Resultado:</b> de 8h por semana para minutos de consulta.</p>
           <div class="chips"><span>Google Ads API</span><span>Meta Marketing API</span><span>Supabase</span><span>Realtime</span></div>
-          <span class="abrir">Abrir a demonstração <span aria-hidden="true">→</span></span>
+          <span class="abrir">Ver o case e a demonstração <span aria-hidden="true">→</span></span>
         </div>
       </a>
 

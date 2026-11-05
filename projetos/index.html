@@ -165,6 +165,8 @@ html{scroll-behavior:smooth}
   .ptab[aria-selected="true"] svg{color:#F5B83D}
 }
 @media (prefers-reduced-motion: reduce){.ptab::after{transition:none}}
+.card .resultado{margin:0;font-size:.9rem;color:var(--fg)}
+.card .resultado b{color:var(--accent);font-weight:600}
 </style>
 </head>
 <body>
@@ -240,7 +242,7 @@ html{scroll-behavior:smooth}
         </div>
       </a>
 
-      <a class="card" data-cat="dashboards" href="/projetos/dashboards/dash-painel-dos-clientes">
+      <a class="card" data-cat="dashboards" href="/projetos/dashboards/central-de-clientes">
         <div class="tela">
           <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>central de clientes · uso interno</span></div>
           <video src="/assets/video/central-clientes.mp4" poster="/assets/img/central-clientes-poster.webp" autoplay muted loop playsinline preload="metadata" width="960" height="522" aria-hidden="true"></video>
@@ -249,8 +251,9 @@ html{scroll-behavior:smooth}
           <div class="meta"><span class="label">Dashboards</span><span class="selo"><i></i>Demonstração</span></div>
           <h2>Central de Clientes</h2>
           <p>Painel interno que conecta Google Ads e Meta Ads por API e aponta saldo baixo, custo acima da meta e orçamento fora do ritmo.</p>
+          <p class="resultado"><b>Resultado:</b> de 8h por semana para minutos de consulta.</p>
           <div class="chips"><span>Google Ads API</span><span>Meta Marketing API</span><span>Supabase</span></div>
-          <span class="abrir">Abrir a demonstração <span aria-hidden="true">→</span></span>
+          <span class="abrir">Ver o case e a demonstração <span aria-hidden="true">→</span></span>
         </div>
       </a>
 
