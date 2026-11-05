@@ -28,18 +28,18 @@
   const CLIENTES = [
     { n: 1, nome: "Clínica Sorriso Pleno", g: true, m: true, cpl: 38, per: "mensal", tot: 6000, og: 3500, om: 2500, posts: true, ritmo: 1.0, cpaF: 0.85, mtipo: "msg" },
     { n: 2, nome: "Academia Movimento", g: false, m: true, cpl: 14, per: "mensal", tot: 2500, og: null, om: null, posts: true, ritmo: 1.0, cpaF: 1.35, mtipo: "msg" },
-    { n: 3, nome: "Imobiliária Horizonte", g: true, m: true, cpl: 55, per: "mensal", tot: 8000, og: 5000, om: 3000, posts: false, ritmo: 1.28, cpaF: 0.95, mtipo: "lead" },
-    { n: 4, nome: "Pet Shop Patinhas", g: true, m: false, cpl: 18, per: "semanal", tot: 700, og: null, om: null, posts: false, ritmo: 0.7, cpaF: 0.9, mtipo: "msg" },
+    { n: 3, nome: "Imobiliária Horizonte", g: true, m: true, cpl: 55, per: "mensal", tot: 8000, og: 5000, om: 3000, posts: false, ritmo: 1.0, cpaF: 0.95, mtipo: "lead" },
+    { n: 4, nome: "Pet Shop Patinhas", g: true, m: false, cpl: 18, per: "semanal", tot: 700, og: null, om: null, posts: false, ritmo: 0.95, cpaF: 0.9, mtipo: "msg" },
     { n: 5, nome: "Escola de Idiomas Fluent", g: true, m: true, cpl: 42, per: "mensal", tot: 5000, og: null, om: null, posts: true, ritmo: 0.95, cpaF: 0.8, mtipo: "lead" },
-    { n: 6, nome: "Casa & Decor Móveis", g: false, m: true, cpl: 25, per: "mensal", tot: 3000, og: null, om: null, posts: false, ritmo: 0.93, cpaF: 1.05, mtipo: "msg" },
-    { n: 7, nome: "Restaurante Sabor da Serra", g: true, m: true, cpl: 20, per: "mensal", tot: 2000, og: null, om: null, posts: false, ritmo: 0.92, cpaF: 0.9, mtipo: "msg" },
-    { n: 8, nome: "Ótica Visão Clara", g: true, m: true, cpl: 30, per: "mensal", tot: 3500, og: null, om: null, posts: true, ritmo: 0.93, cpaF: 0.9, mtipo: "msg" },
+    { n: 6, nome: "Casa & Decor Móveis", g: false, m: true, cpl: 25, per: "mensal", tot: 3000, og: null, om: null, posts: false, ritmo: 0.93, cpaF: 0.95, mtipo: "msg" },
+    { n: 7, nome: "Restaurante Sabor da Serra", g: true, m: true, cpl: 20, per: "mensal", tot: 2000, og: null, om: null, posts: false, ritmo: 0.92, cpaF: 0.9, mtipo: "msg", parou: "meta" },
+    { n: 8, nome: "Ótica Visão Clara", g: true, m: true, cpl: 30, per: "mensal", tot: 3500, og: null, om: null, posts: true, ritmo: 0.93, cpaF: 0.9, mtipo: "msg", semConv: "google" },
     { n: 9, nome: "Estúdio Bela Pele", g: false, m: true, cpl: 16, per: "mensal", tot: 1800, og: null, om: null, posts: true, ritmo: 0.97, cpaF: 0.85, mtipo: "msg" },
     { n: 10, nome: "Prado Advocacia", g: true, m: false, cpl: 70, per: "mensal", tot: 4000, og: null, om: null, posts: false, ritmo: 0.92, cpaF: 0.9, mtipo: "lead" },
-    { n: 11, nome: "Construtora Alicerce", g: true, m: true, cpl: 85, per: "mensal", tot: 9000, og: 5500, om: 3500, posts: false, ritmo: 0.9, cpaF: 0.88, mtipo: "lead" },
-    { n: 12, nome: "Padaria Trigo Dourado", g: false, m: true, cpl: 9, per: "semanal", tot: 350, og: null, om: null, posts: true, ritmo: 0.93, cpaF: 0.8, mtipo: "msg" },
-    { n: 13, nome: "Clínica Veterinária Amigo Fiel", g: true, m: true, cpl: 28, per: "mensal", tot: 4200, og: 2400, om: 1800, posts: false, ritmo: 0.93, cpaF: 1.15, mtipo: "msg" },
-    { n: 14, nome: "Auto Center Roda Viva", g: true, m: false, cpl: 24, per: "mensal", tot: 2200, og: null, om: null, posts: false, ritmo: 0.92, cpaF: 0.85, mtipo: "msg" },
+    { n: 11, nome: "Construtora Alicerce", g: true, m: true, cpl: 85, per: "mensal", tot: 9000, og: 5500, om: 3500, posts: false, ritmo: 0.6, cpaF: 0.88, mtipo: "lead" },
+    { n: 12, nome: "Padaria Trigo Dourado", g: false, m: true, cpl: 9, per: "semanal", tot: 350, og: null, om: null, posts: true, ritmo: 1.7, cpaF: 0.8, mtipo: "msg" },
+    { n: 13, nome: "Clínica Veterinária Amigo Fiel", g: true, m: true, cpl: 28, per: "mensal", tot: 4200, og: 2400, om: 1800, posts: false, ritmo: 1.3, cpaF: 0.95, mtipo: "msg" },
+    { n: 14, nome: "Auto Center Roda Viva", g: true, m: false, cpl: null, per: "mensal", tot: 2200, og: null, om: null, posts: false, ritmo: 0.92, cpaF: 0.85, mtipo: "msg", cpaPico: "google" },
     { n: 15, nome: "Moda Aurora", g: false, m: true, cpl: 12, per: "mensal", tot: 2800, og: null, om: null, posts: true, ritmo: 0.93, cpaF: 0.9, mtipo: "msg" },
     { n: 16, nome: "Colégio Novo Saber", g: true, m: true, cpl: 48, per: "mensal", tot: 6000, og: 3500, om: 2500, posts: true, ritmo: 0.93, cpaF: 0.92, mtipo: "lead" },
   ];
@@ -93,12 +93,13 @@
           const semana = dow === 0 ? 0.75 : dow === 6 ? 0.85 : 1.05;
           const tendencia = 0.88 + (DIAS - k) / DIAS * 0.1; // leve crescimento ao longo do período
           const parcial = k === 0 ? frac : 1;
-          const custoReal = diaPlat[p] * cp.peso * c.ritmo * semana * tendencia * entre(0.78, 1.22) * parcial;
+          const parado = c.parou === p && k <= 1;
+          const custoReal = parado ? 0 : diaPlat[p] * cp.peso * c.ritmo * semana * tendencia * entre(0.78, 1.22) * parcial;
           let imp, cli2;
           if (p === "google") { cli2 = custoReal / (cpcBase * entre(0.9, 1.1)); imp = cli2 / (cp.ctr * entre(0.85, 1.15)); }
           else { imp = custoReal / (cpmBase * entre(0.9, 1.12)) * 1000; cli2 = imp * cp.ctr * entre(0.85, 1.15); }
-          const cpa = c.cpl * c.cpaF * entre(0.75, 1.3);
-          const conv = cp.conv ? inteiro(custoReal / cpa * cp.conv) : 0;
+          const cpa = (c.cpl || 30) * c.cpaF * entre(0.75, 1.3) * (p === "meta" ? 0.72 : 1) * (c.cpaPico === p && k <= 7 ? 1.9 : 1);
+          const conv = cp.conv && !(c.semConv === p && k >= 1 && k <= 7) ? inteiro(custoReal / cpa * cp.conv) : 0;
           const custo = p === "meta" ? custoReal / (1 + IMPOSTO_META) : custoReal;
           const tipo = p === "google" ? "conversoes" : (cp.tipo || TIPO_META[c.mtipo]);
           const resultados = cp.tipo === "reach" ? Math.round(imp * entre(0.55, 0.7)) : conv;
@@ -122,17 +123,19 @@
     }
     // contas e saldos
     if (c.g) {
-      db.painel_contas.push({ cliente_id: cli, plataforma: "google", status_ok: true, status: "Ativa", pre_pago: false, saldo: null, limite_gasto: null, gasto_total: null });
+      const suspensa = c.n === 5;
+      db.painel_contas.push({ cliente_id: cli, plataforma: "google", status_ok: !suspensa, status: suspensa ? "Suspensa" : "Ativa", pre_pago: false, saldo: null, limite_gasto: null, gasto_total: null });
       const saldo = { 1: 1450, 3: 2300, 4: 95, 5: 3100, 7: 400, 8: 1200, 10: 2600, 11: 4100, 13: 1750, 14: 900, 16: 2800 }[c.n] ?? null;
       db.painel_saldo_google.push({ cliente_id: cli, saldo });
       db.painel_recargas.push({ id: id(), cliente_id: cli, valor: 3000, data: somaDias(H, -40) }, { id: id(), cliente_id: cli, valor: 2000, data: somaDias(H, -12) });
     }
     if (c.m) {
-      const conf = { 1: { pre_pago: true, saldo: 820 }, 2: { pre_pago: true, saldo: 140 }, 3: { pre_pago: false, limite_gasto: 40000, gasto_total: 31800 },
+      const conf = { 1: { pre_pago: true, saldo: 820 }, 2: { pre_pago: true, saldo: 140 }, 3: { pre_pago: false, limite_gasto: 40000, gasto_total: 39780 },
         5: { pre_pago: false }, 6: { pre_pago: true, saldo: 610 }, 7: { pre_pago: false }, 8: { pre_pago: true, saldo: 940 },
-        9: { pre_pago: true, saldo: 520 }, 11: { pre_pago: false }, 12: { pre_pago: true, saldo: 310 }, 13: { pre_pago: false }, 15: { pre_pago: true, saldo: 1100 },
+        9: { pre_pago: true, saldo: 0 }, 11: { pre_pago: false }, 12: { pre_pago: true, saldo: 310 }, 13: { pre_pago: false }, 15: { pre_pago: true, saldo: 1100 },
         16: { pre_pago: false } }[c.n] || { pre_pago: false };
-      db.painel_contas.push({ cliente_id: cli, plataforma: "meta", status_ok: true, status: "Ativa", saldo: null, limite_gasto: null, gasto_total: null, ...conf });
+      const pendente = c.n === 15;
+      db.painel_contas.push({ cliente_id: cli, plataforma: "meta", status_ok: !pendente, status: pendente ? "Pagamento pendente" : "Ativa", saldo: null, limite_gasto: null, gasto_total: null, ...conf });
     }
   }
 
@@ -143,7 +146,9 @@
     for (const c of CLIENTES) {
       if (c.inativo) continue;
       for (const p of [c.g && "google", c.m && "meta"].filter(Boolean))
-        db.painel_sync_log.push({ id: id(), executado_em: quando, cliente_id: uuid(c.n), plataforma: p, status: "ok", linhas: Math.round(entre(6, 40)), mensagem: null });
+        { const erro = c.n === 10 && p === "google" && t <= 3;
+          db.painel_sync_log.push({ id: id(), executado_em: quando, cliente_id: uuid(c.n), plataforma: p, status: erro ? "erro" : "ok", linhas: erro ? null : Math.round(entre(6, 40)),
+            mensagem: erro ? "Google Ads: o acesso à conta expirou. Reconecte a conta para voltar a coletar." : null }); }
     }
   }
 
@@ -248,7 +253,9 @@
           const quando = new Date().toISOString();
           for (const c of db.painel_clientes.filter((x) => x.ativo))
             for (const p of [c.google_customer_id && "google", c.meta_ad_account_id && "meta"].filter(Boolean))
-              db.painel_sync_log.push({ id: id(), executado_em: quando, cliente_id: c.id, plataforma: p, status: "ok", linhas: Math.round(entre(6, 40)), mensagem: null });
+            { const erro = c.id === uuid(10) && p === "google";
+              db.painel_sync_log.push({ id: id(), executado_em: quando, cliente_id: c.id, plataforma: p, status: erro ? "erro" : "ok", linhas: erro ? null : Math.round(entre(6, 40)),
+                mensagem: erro ? "Google Ads: o acesso à conta expirou. Reconecte a conta para voltar a coletar." : null }); }
           return { data: { ok: true }, error: null };
         }
         if (nome === "equipe") {
