@@ -189,6 +189,24 @@ html{scroll-behavior:smooth}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
 @media (max-width:900px){.stats{grid-template-columns:1fr 1fr}.duas{grid-template-columns:1fr;gap:20px}.recursos{grid-template-columns:1fr 1fr}}
 @media (max-width:640px){.bloco{padding:52px 0}.recursos{grid-template-columns:1fr}.perguntas{grid-template-columns:1fr}.antes-depois{grid-template-columns:1fr}.seta{transform:rotate(90deg)}.stat{padding:18px}}
+
+/* Hero com notebook */
+.hero-case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:48px;align-items:center;padding-bottom:40px}
+.hero-case .intro{max-width:none}
+.notebook-col{display:flex;flex-direction:column;align-items:center;padding:40px 0 56px;position:relative}
+.notebook{display:block;width:100%;max-width:560px;text-decoration:none;transition:transform .3s ease}
+.notebook:hover{transform:translateY(-4px)}
+.nb-tela{position:relative;background:#14111E;border:2px solid #4A3F66;border-radius:16px 16px 6px 6px;padding:18px 14px 14px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.nb-cam{position:absolute;top:7px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:#4A3F66}
+.nb-tela video{display:block;width:100%;height:auto;aspect-ratio:960/522;object-fit:cover;border-radius:4px;background:#F8F6FC}
+.nb-base{position:relative;height:16px;margin:0 -7%;background:linear-gradient(#D9C8F5,#9B8BB8);border-radius:0 0 14px 14px;box-shadow:0 18px 30px rgba(0,0,0,.3)}
+.nb-base span{position:absolute;top:0;left:50%;width:18%;height:6px;margin-left:-9%;background:#8A79A8;border-radius:0 0 8px 8px}
+.btn-abrir{margin-top:30px;display:inline-flex;align-items:center;gap:10px;background:var(--amber);color:#1E1B2E;text-decoration:none;font-weight:600;font-size:1.05rem;padding:15px 30px;border-radius:999px;box-shadow:0 10px 28px rgba(245,184,61,.35);transition:transform .15s ease,box-shadow .15s ease}
+.btn-abrir:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(245,184,61,.45)}
+.btn-abrir:focus-visible{outline:2px solid #F8F6FC;outline-offset:3px}
+.nb-nota{margin:12px 0 0;font-size:.8rem;color:var(--hero-muted);text-align:center}
+@media (max-width:900px){.hero-case{grid-template-columns:1fr;gap:8px;padding-bottom:24px}.notebook-col{padding:8px 0 48px}.notebook{max-width:520px}}
+@media (prefers-reduced-motion: reduce){.notebook,.btn-abrir{transition:none}}
 </style>
 </head>
 <body>
@@ -209,13 +227,27 @@ html{scroll-behavior:smooth}
       </nav>
       <a class="btn-top" href="https://wa.me/5585998559462?text=Ol%C3%A1%2C%20Ana!%20Vi%20o%20case%20da%20Central%20de%20Clientes%20e%20quero%20conversar." target="_blank" rel="noopener">Vamos conversar</a>
     </div>
+    <div class="hero-case">
     <div class="intro">
       <nav class="trilha" aria-label="Você está em">
         <a href="/">Início</a><span aria-hidden="true">/</span><a href="/projetos">Projetos</a><span aria-hidden="true">/</span><a href="/projetos/dashboards">Dashboards</a><span aria-hidden="true">/</span><b aria-current="page">Central de Clientes</b>
       </nav>
       <h1>Central de Clientes</h1>
       <p class="sub-case">O painel de tráfego pago que tirou cerca de 8 horas semanais de checagem manual do meu dia a dia.</p>
-      <div class="hero-btns"><a class="btn-hero" href="/projetos/dashboards/dash-painel-dos-clientes">Abrir a demonstração <span aria-hidden="true">→</span></a><a class="btn-hero ghost" href="#orcamento">Pedir orçamento</a></div>
+      <div class="hero-btns"><a class="btn-hero ghost" href="#orcamento">Pedir orçamento</a></div>
+    </div>
+    <div class="notebook-col">
+      <a class="notebook" href="/projetos/dashboards/dash-painel-dos-clientes" aria-label="Abrir a demonstração da Central de Clientes">
+        <div class="nb-tela">
+          <div class="nb-cam" aria-hidden="true"></div>
+          <video src="/assets/video/central-clientes.mp4" poster="/assets/img/central-clientes-poster.webp" autoplay muted loop playsinline preload="metadata" width="960" height="522" aria-hidden="true"></video>
+        </div>
+        <div class="nb-base" aria-hidden="true"><span></span></div>
+      </a>
+      <a class="btn-abrir" href="/projetos/dashboards/dash-painel-dos-clientes">Abrir o projeto <span aria-hidden="true">→</span></a>
+      <p class="nb-nota">Demonstração navegável com clientes e números fictícios.</p>
+    </div>
+    </div>
     </div>
   </div>
 </header>
