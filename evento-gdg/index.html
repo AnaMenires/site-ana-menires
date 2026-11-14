@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Selfware: o kit da palestra · Ana Menires</title>
+<meta name="description" content="Material da palestra Selfware no DevFest Fortaleza 2026: checklist de segurança com 38 itens, modelos de regras de negócio, matriz de permissões e escopo do MVP.">
+<meta property="og:title" content="Selfware: o kit da palestra · Ana Menires">
+<meta property="og:description" content="Checklist de segurança para construir com IA e os 3 documentos para escrever antes do código.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --roxo:#5B2A86; --roxo-esc:#45206A; --lilas:#D9C8F5; --lilas-claro:#EFE7FB;
+    --ambar:#F5B83D; --preto:#0F0D16; --grafite:#1E1B2E; --off:#F8F6FC; --branco:#FFFFFF;
+    --texto-sec:#4A4560; --borda:#E3D9F3;
+    --raio:16px; --larg:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--off);color:var(--grafite);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Poppins,system-ui,sans-serif;line-height:1.2;color:var(--grafite)}
+  a{color:var(--roxo)}
+  .wrap{max-width:var(--larg);margin:0 auto;padding:0 20px}
+  section{padding:72px 0}
+  .eyebrow{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--roxo);margin-bottom:12px}
+  .lead{font-size:18px;color:var(--texto-sec);max-width:680px}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:Inter,sans-serif;font-weight:600;font-size:15px;padding:14px 22px;border-radius:999px;border:2px solid transparent;cursor:pointer;text-decoration:none;transition:transform .15s ease,background .15s ease,color .15s ease;min-height:48px}
+  .btn:active{transform:scale(.97)}
+  .btn-ambar{background:var(--ambar);color:var(--preto)}
+  .btn-ambar:hover{background:#f7c55f}
+  .btn-roxo{background:var(--roxo);color:var(--branco)}
+  .btn-roxo:hover{background:var(--roxo-esc)}
+  .btn-linha{background:transparent;color:var(--roxo);border-color:var(--roxo)}
+  .btn-linha:hover{background:var(--lilas-claro)}
+  .btn-claro{background:transparent;color:var(--off);border-color:rgba(248,246,252,.5)}
+  .btn-claro:hover{background:rgba(248,246,252,.1)}
+  .btns{display:flex;flex-wrap:wrap;gap:12px}
+  .btn svg{width:18px;height:18px;flex:none}
+  :focus-visible{outline:3px solid var(--ambar);outline-offset:3px}
+
+  /* Hero */
+  .hero{background:var(--roxo);color:var(--off);padding:28px 0 72px;position:relative;overflow:hidden}
+  .hero::after{content:"";position:absolute;right:-160px;top:-160px;width:460px;height:460px;border-radius:50%;border:2px solid rgba(217,200,245,.18)}
+  .topo{display:flex;align-items:center;gap:12px;margin-bottom:56px}
+  .topo .nome{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:22px;line-height:1}
+  .topo .assin{font-size:12px;color:var(--lilas);letter-spacing:.04em}
+  .hero .eyebrow{color:var(--ambar)}
+  .hero h1{color:var(--off);font-size:clamp(34px,7vw,60px);margin-bottom:18px;max-width:820px}
+  .hero h1 span{color:var(--ambar)}
+  .hero .lead{color:var(--lilas);margin-bottom:32px}
+  .hero-nav{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+
+  /* Checklist */
+  .stat{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;background:var(--preto);color:var(--off);border-radius:var(--raio);padding:28px;margin:32px 0}
+  .stat .num{font-family:Poppins,sans-serif;font-weight:700;font-size:clamp(56px,12vw,88px);color:var(--ambar);line-height:1}
+  .stat p{color:var(--off);font-size:17px}
+  .stat small{display:block;color:var(--lilas);font-size:13px;margin-top:8px}
+  .passos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:32px 0}
+  .passo{background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);padding:22px}
+  .passo .n{font-family:Poppins,sans-serif;font-weight:700;color:var(--roxo);font-size:14px;margin-bottom:6px}
+  .passo h3{font-size:17px;margin-bottom:6px}
+  .passo p{font-size:15px;color:var(--texto-sec)}
+  .acoes{background:var(--lilas-claro);border-radius:var(--raio);padding:24px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin:32px 0}
+  .acoes p{font-weight:600;color:var(--grafite);max-width:420px}
+  .acoes p span{display:block;font-weight:400;font-size:14px;color:var(--texto-sec)}
+  .blocos{display:grid;gap:12px}
+  details.bloco{background:var(--branco);border:1px solid var(--borda);border-radius:var(--raio);overflow:hidden}
+  details.bloco summary{list-style:none;cursor:pointer;padding:18px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-family:Poppins,sans-serif;font-weight:600;font-size:16px}
+  details.bloco summary::-webkit-details-marker{display:none}
+  .badge{font-family:Inter,sans-serif;font-size:13px;font-weight:600;background:var(--lilas-claro);color:var(--roxo);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .chev{width:20px;height:20px;transition:transform .2s;flex:none;color:var(--roxo)}
+  details[open] .chev{transform:rotate(180deg)}
+  .sum-dir{display:flex;align-items:center;gap:10px}
+  details.bloco ol{padding:0 22px 20px 22px;list-style:none;display:grid;gap:12px}
+  details.bloco li{display:grid;grid-template-columns:34px 1fr;gap:10px;font-size:15px}
+  details.bloco li .i{font-family:Poppins,sans-serif;font-weight:700;color:var(--roxo);font-size:14px;padding-top:1px}
+  details.bloco li b{display:block;color:var(--grafite)}
+  details.bloco li span{color:var(--texto-sec)}
+  .exemplo{margin-top:32px}
+  .exemplo h3{font-size:17px;margin-bottom:10px}
+  pre{background:var(--preto);color:#E8E2F4;border-radius:12px;padding:18px;overflow-x:auto;font-size:13.5px;line-height:1.7;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  pre .ok{color:var(--ambar)}
+  .credito{font-size:14px;color:var(--texto-sec);margin-top:24px;border-left:3px solid var(--lilas);padding-left:14px}
+
+  /* Modelos */
+  .sec-branca{background:var(--branco)}
+  .modelos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:32px}
+  .modelo{background:var(--off);border:1px solid var(--borda);border-radius:var(--raio);padding:24px;display:flex;flex-direction:column;gap:12px}
+  .modelo .tag{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--roxo)}
+  .modelo h3{font-size:20px}
+  .modelo p{font-size:15px;color:var(--texto-sec);flex:1}
+  .modelo .dica{font-size:14px;color:var(--grafite);background:var(--branco);border-radius:10px;padding:10px 12px;border-left:3px solid var(--ambar)}
+  .modelo details summary{cursor:pointer;font-weight:600;color:var(--roxo);font-size:14px;padding:6px 0}
+  .modelo details pre{margin-top:8px;font-size:12.5px;max-height:320px}
+  .modelo .btns .btn{flex:1;padding:12px 14px;font-size:14px}
+  .link-md{background:none;border:0;color:var(--roxo);font:500 13px Inter,sans-serif;text-decoration:underline;cursor:pointer;align-self:center;padding:4px}
+
+  /* Blocos finais */
+  .faixa{background:var(--preto);color:var(--off)}
+  .faixa h2,.faixa-roxa h2{color:var(--off)}
+  .faixa .lead{color:var(--lilas)}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  .cartao{border-radius:var(--raio);padding:28px;display:flex;flex-direction:column;gap:14px}
+  .cartao h2{font-size:24px}
+  .cartao p{flex:1}
+  .c-escuro{background:var(--grafite);border:1px solid #2f2a45}
+  .c-escuro p{color:var(--lilas)}
+  .c-ambar{background:var(--ambar);color:var(--preto)}
+  .c-ambar h2{color:var(--preto)}
+  .c-ambar .btn-roxo{align-self:flex-start}
+  .faixa .btn{align-self:flex-start}
+  .fontes{list-style:none;display:grid;gap:10px;margin-top:20px}
+  .fontes li a{display:flex;justify-content:space-between;gap:12px;background:var(--branco);border:1px solid var(--borda);border-radius:12px;padding:14px 18px;text-decoration:none;color:var(--grafite);font-weight:500}
+  .fontes li a:hover{border-color:var(--roxo)}
+  .fontes li a span{color:var(--texto-sec);font-weight:400;font-size:14px;white-space:nowrap}
+  .faixa-roxa{background:var(--roxo);color:var(--off);text-align:center}
+  .faixa-roxa .lead{color:var(--lilas);margin:0 auto 28px}
+  .faixa-roxa .btns{justify-content:center}
+  footer{background:var(--preto);color:var(--lilas);font-size:13px;padding:28px 0;text-align:center}
+  footer b{color:var(--off);font-family:"Cormorant Garamond",serif;font-size:18px}
+
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--preto);color:var(--off);padding:12px 20px;border-radius:999px;font-size:14px;font-weight:500;opacity:0;pointer-events:none;transition:all .25s;z-index:10;box-shadow:0 8px 24px rgba(15,13,22,.25)}
+  .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  @media (max-width:860px){
+    .passos,.modelos,.duo{grid-template-columns:1fr}
+    section{padding:56px 0}
+  }
+  @media (max-width:520px){
+    .stat{grid-template-columns:1fr;gap:8px;padding:22px}
+    .btns .btn,.acoes .btn{width:100%}
+    .acoes .btns{width:100%}
+    .fontes li a{flex-direction:column;gap:2px}
+    .hero-nav .btn{flex:1 1 calc(50% - 10px)}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="topo">
+      <svg width="48" height="48" viewBox="0 0 260 260" role="img" aria-label="Logo Ana Menires"><circle cx="130" cy="130" r="112" fill="none" stroke="#D9C8F5" stroke-width="10"/><circle cx="130" cy="130" r="112" fill="none" stroke="#F5B83D" stroke-width="10" stroke-linecap="round" stroke-dasharray="150 554" transform="rotate(-90 130 130)"/><text x="130" y="162" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="100" font-weight="600" letter-spacing="2" fill="#F8F6FC">AM</text></svg>
+      <div>
+        <div class="nome">Ana Menires</div>
+        <div class="assin">Marketing · Tecnologia · Estratégia</div>
+      </div>
+    </div>
+    <p class="eyebrow">DevFest Fortaleza 2026 · GDG Fortaleza</p>
+    <h1><span>Selfware:</span> o kit da palestra</h1>
+    <p class="lead">Obrigada por assistir. Aqui está o que eu uso para construir software com IA sem abrir mão da segurança: o checklist que guiou o Fluxo e os 3 documentos para escrever antes da primeira linha de código.</p>
+    <nav class="hero-nav" aria-label="Seções da página">
+      <a class="btn btn-ambar" href="#checklist">Checklist de segurança</a>
+      <a class="btn btn-claro" href="#modelos">Os 3 modelos</a>
+      <a class="btn btn-claro" href="#slides">Fontes</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="checklist">
+    <div class="wrap">
+      <p class="eyebrow">O portão de segurança</p>
+      <h2 style="font-size:clamp(28px,5vw,40px);margin-bottom:14px;max-width:760px">Os 38 itens que a IA precisa cumprir antes de escrever qualquer código</h2>
+      <p class="lead">É o mesmo checklist que eu usei para construir o Fluxo. Ele transforma "lembra da segurança" em uma regra que a IA não consegue pular.</p>
+
+      <div class="stat">
+        <div class="num">44%</div>
+        <p>das tarefas de código geradas por IA, sem orientação de segurança, saíram com falhas. E o código quase sempre compila: o problema não aparece na tela.
+          <small>Fonte: Veracode, GenAI Code Security Report (2026)</small></p>
+      </div>
+
+      <div class="passos">
+        <div class="passo"><div class="n">01</div><h3>Antes de codar</h3><p>A IA percorre os 38 itens, um a um, antes de gerar o primeiro arquivo.</p></div>
+        <div class="passo"><div class="n">02</div><h3>Aplica ou justifica</h3><p>Cada item entra desde a primeira versão ou é marcado como "não se aplica", com o motivo. Nada é pulado em silêncio.</p></div>
+        <div class="passo"><div class="n">03</div><h3>Entrega com prova</h3><p>No fim, a IA apresenta um resumo de conformidade item por item. Você sabe exatamente o que foi feito.</p></div>
+      </div>
+
+      <div class="acoes">
+        <p>Use agora no seu projeto<span>Cole no Claude, ChatGPT ou Gemini, ou salve como regra fixa do projeto (CLAUDE.md, regras do Cursor).</span></p>
+        <div class="btns">
+          <button class="btn btn-roxo" type="button" data-acao="copiar-checklist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar como instrução para a IA</button>
+          <button class="btn btn-linha" type="button" data-acao="baixar-checklist">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            Baixar (.md)</button>
+        </div>
+      </div>
+
+      <div class="blocos" id="blocos"></div>
+
+      <div class="exemplo">
+        <h3>Como fica o resumo de conformidade</h3>
+<pre><span class="ok">Conformidade de segurança:</span>
+[x] 1. Chaves de API: em variável de ambiente no servidor
+[x] 4. Row-Level Security: ativo em todas as tabelas
+[x] 24. Logs de auditoria: quem fez o quê e quando
+[ ] 16. Upload de arquivos: N/A, este app não recebe arquivos
+...</pre>
+      </div>
+
+      <p class="credito">Checklist compilado por Ana Menires a partir das preocupações de segurança mais recorrentes no mercado, organizado com apoio de IA. Ele não substitui a revisão de um especialista em segurança antes de colocar um sistema em operação.</p>
+    </div>
+  </section>
+
+  <section id="modelos" class="sec-branca">
+    <div class="wrap">
+      <p class="eyebrow">Antes do código</p>
+      <h2 style="font-size:clamp(28px,5vw,40px);margin-bottom:14px;max-width:760px">Os 3 documentos que evitam que a IA decida por você</h2>
+      <p class="lead">Quando você não decide, a IA decide, e cada conversa nova pode decidir diferente. Preencha estes modelos antes de pedir o primeiro código.</p>
+      <div class="modelos" id="modelos-lista"></div>
+    </div>
+  </section>
+
+  <section class="faixa">
+    <div class="wrap">
+      <div class="duo">
+        <div class="cartao c-escuro">
+          <p class="eyebrow" style="color:var(--ambar);margin:0">Acompanhe</p>
+          <h2>O Fluxo saindo do teste</h2>
+          <p>O Fluxo está entrando em fase de testes. Quando ele entrar em operação, eu conto o que funcionou, o que não funcionou e os números. No LinkedIn.</p>
+          <a class="btn btn-ambar" href="https://www.linkedin.com/in/anamenires-mktdigital" target="_blank" rel="noopener">Seguir no LinkedIn</a>
+        </div>
+        <div class="cartao c-ambar">
+          <p class="eyebrow" style="color:var(--roxo-esc);margin:0">Vamos conversar</p>
+          <h2>Quer conversar sobre algum projeto?</h2>
+          <p>Software sob medida, automação, dashboards, sites ou tráfego pago. Me conta o que você precisa.</p>
+          <a class="btn btn-roxo" href="https://wa.me/5585998559462?text=Oi%20Ana!%20Vi%20sua%20palestra%20no%20DevFest%20Fortaleza%20e%20quero%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener">Fala comigo no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="slides">
+    <div class="wrap">
+      <p class="eyebrow">Material da palestra</p>
+      <h2 style="font-size:clamp(28px,5vw,40px);margin-bottom:14px">Fontes da palestra</h2>
+      <p class="lead">As pesquisas citadas na palestra.</p>
+      <!-- Botão dos slides: descomente quando o PDF estiver nesta pasta com o nome slides-selfware-ana-menires.pdf
+      <div class="btns" style="margin-top:24px"><a class="btn btn-roxo" href="slides-selfware-ana-menires.pdf" download>Baixar os slides (PDF)</a></div>
+      -->
+      <ul class="fontes">
+        <li><a href="https://agenciasebrae.com.br/dados/pequenos-negocios-do-brasil-usam-mais-ia-que-os-norte-americanos-aponta-sebrae/" target="_blank" rel="noopener">Sebrae: Transformação Digital nos Pequenos Negócios <span>2026</span></a></li>
+        <li><a href="https://www.businesswire.com/news/home/20260217548274/en/Retools-2026-Build-vs.-Buy-Report-Reveals-35-of-Enterprises-Have-Already-Replaced-SaaS-With-Custom-Software" target="_blank" rel="noopener">Retool: The Build vs. Buy Shift <span>2026</span></a></li>
+        <li><a href="https://jdriven.com/blog/2026/07/Selfware" target="_blank" rel="noopener">JDriven: Selfware <span>2026</span></a></li>
+        <li><a href="https://sdtimes.com/agentic-security/veracode-finds-ai-generated-code-security-has-barely-improved-since-last-year/" target="_blank" rel="noopener">Veracode: GenAI Code Security Report <span>2026</span></a></li>
+        <li><a href="https://survey.stackoverflow.co/2025/ai" target="_blank" rel="noopener">Stack Overflow Developer Survey: IA <span>2025</span></a></li>
+        <li><a href="https://ctomagazine.com/microsoft-work-trend-index/" target="_blank" rel="noopener">Microsoft Work Trend Index <span>2024</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="faixa-roxa">
+    <div class="wrap">
+      <h2 style="font-size:clamp(26px,4.5vw,36px);margin-bottom:12px">Me acompanhe nas redes</h2>
+      <p class="lead">Conteúdo sobre IA aplicada aos negócios, tecnologia e marketing.</p>
+      <div class="btns">
+        <a class="btn btn-ambar" href="https://www.linkedin.com/in/anamenires-mktdigital" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          LinkedIn</a>
+        <a class="btn btn-claro" href="https://www.instagram.com/ana_menires" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          @ana_menires</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><b>Ana Menires</b><br>Marketing · Tecnologia · Estratégia · anamenires.com.br</div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const BLOCOS = [
+  {t:"Credenciais e segredos", itens:[
+    ["Esconder as chaves de API","Nunca expor chaves no frontend ou no JavaScript; usar variáveis de ambiente no servidor."],
+    ["Limpar segredos do Git","Nenhuma chave, senha ou token commitado no repositório, nem no histórico."],
+    ["Usar a chave pública do banco no frontend","No navegador, só a chave restrita (como a anon key), nunca a chave administrativa."]]},
+  {t:"Banco de dados", itens:[
+    ["Ativar Row-Level Security (RLS)","Cada usuário só acessa as linhas que lhe pertencem, garantido no próprio banco."],
+    ["Criptografar dados sensíveis","CPF, dados de pagamento e afins nunca em texto puro."],
+    ["Parametrizar as queries","Nunca concatenar strings para montar SQL; usar queries parametrizadas ou ORM."]]},
+  {t:"Autenticação e acesso", itens:[
+    ["Forçar autenticação no servidor","Toda validação sensível é checada no backend, nunca só no frontend."],
+    ["Travar acesso aos registros","Cada endpoint verifica se o usuário tem permissão sobre aquele recurso."],
+    ["Bloquear adulteração de campos","O backend não confia em role, preço ou saldo enviados pelo cliente."],
+    ["Proteger cookies de sessão","Usar as flags HttpOnly, Secure e SameSite."],
+    ["Fazer hash das senhas","Nunca salvar senha em texto puro; usar bcrypt ou argon2."],
+    ["Limitar tentativas de login","Bloquear ou atrasar depois de várias tentativas falhas."]]},
+  {t:"Proteção contra ataques", itens:[
+    ["Proteção contra bots","Captcha ou honeypot em formulários públicos de cadastro, login e contato."],
+    ["Validar toda entrada de dados","Validação no frontend e, obrigatoriamente, no backend."],
+    ["Escapar conteúdo do usuário","Nunca renderizar HTML ou JS vindo do usuário sem escapar (evita XSS)."],
+    ["Restringir upload de arquivos","Validar o tipo real e o tamanho, e nunca usar o nome original do arquivo."]]},
+  {t:"Infraestrutura e API", itens:[
+    ["Enxugar as respostas da API","Nunca devolver senha, hash, tokens internos ou dados de outros usuários."],
+    ["Adicionar cabeçalhos de segurança","CSP, X-Frame-Options, X-Content-Type-Options e HSTS."],
+    ["Forçar HTTPS","Redirecionar HTTP para HTTPS e usar HSTS."],
+    ["Escanear as dependências","Rodar npm audit ou Dependabot antes de publicar."],
+    ["Configurar CORS corretamente","Nunca liberar * em produção; listar as origens permitidas."],
+    ["Proteção contra CSRF","Token CSRF em ações sensíveis quando a autenticação usa cookies."],
+    ["Rate limit geral na API","Não só no login: aplicar também aos endpoints públicos."]]},
+  {t:"Monitoramento e resposta", itens:[
+    ["Logs de auditoria","Quem fez o quê e quando, sem registrar dados sensíveis."],
+    ["Alertas de atividade suspeita","Sinalizar muitos logins falhos e acessos fora do padrão."],
+    ["Plano básico de resposta a incidentes","Passos definidos para um vazamento: revogar chaves e avisar os afetados."],
+    ["Testes de segurança automatizados","Escanear o código (SAST/DAST) antes do deploy, quando houver pipeline."]]},
+  {t:"Autenticação reforçada", itens:[
+    ["Autenticação em dois fatores","Oferecer 2FA, principalmente para contas administrativas."],
+    ["Expiração de sessão por inatividade","Encerrar sessões paradas por muito tempo."],
+    ["Invalidar sessões antigas","Derrubar as outras sessões quando a senha é trocada."]]},
+  {t:"Ambientes e deploy", itens:[
+    ["Separar dev, staging e produção","Nunca testar com dados reais de cliente."],
+    ["Rotacionar chaves e segredos","Trocar chaves periodicamente."],
+    ["Menor privilégio","Cada chave ou serviço só com o acesso mínimo necessário."],
+    ["Segurança por padrão","Toda função nova nasce restrita; o acesso é liberado depois, de forma explícita."],
+    ["Isolamento entre clientes","Em sistemas com várias empresas, os dados de uma nunca vazam para outra."]]},
+  {t:"Dados", itens:[
+    ["Backup regular e testado","Backup automático e restauração testada de tempos em tempos."],
+    ["Retenção e exclusão de dados","Política alinhada à LGPD, com processo para excluir dados a pedido do titular."],
+    ["Não expor erros detalhados","Mensagem genérica para o usuário; detalhes só nos logs internos."]]}
+];
+
+const chev = '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>';
+let n = 0;
+document.getElementById('blocos').innerHTML = BLOCOS.map((b, bi) => {
+  const lis = b.itens.map(([t, d]) => { n++; return `<li><span class="i">${n}</span><div><b>${t}</b><span>${d}</span></div></li>`; }).join('');
+  return `<details class="bloco"${bi === 0 ? ' open' : ''}><summary>${b.t}<span class="sum-dir"><span class="badge">${b.itens.length} itens</span>${chev}</span></summary><ol>${lis}</ol></details>`;
+}).join('');
+
+function textoChecklist() {
+  let i = 0;
+  const lista = BLOCOS.map(b => `### ${b.t}\n` + b.itens.map(([t, d]) => `${++i}. **${t}**: ${d}`).join('\n')).join('\n\n');
+  return `# Checklist de segurança: pré-requisito obrigatório antes de codar
+
+Use este checklist sempre que eu pedir para criar, desenvolver ou modificar significativamente um app, sistema, site com backend, API, dashboard, formulário com dados de usuário, painel administrativo ou qualquer aplicação que armazene ou processe dados, mesmo que eu não mencione segurança.
+
+## Processo obrigatório (nesta ordem)
+
+1. Antes de escrever qualquer código, percorra os 38 itens abaixo, um a um.
+2. Para cada item, decida explicitamente:
+   - Aplica-se: implemente desde a primeira versão, nunca como "melhoria futura".
+   - Não se aplica: só com uma justificativa curta e concreta. Nunca omita um item em silêncio.
+3. Antes do primeiro arquivo de código, me mostre um resumo: quais medidas entram desde o início e quais ficaram como "não se aplica", e por quê.
+4. Escreva o código já com as medidas aplicáveis. Não gere uma versão insegura "para simplificar" prometendo proteger depois.
+5. No fim da entrega, apresente o resumo de conformidade cobrindo os 38 itens, no formato:
+   [x] 1. Chaves de API: em variável de ambiente no servidor
+   [ ] 16. Upload de arquivos: N/A, este app não recebe arquivos
+6. Se eu pedir para pular alguma etapa de segurança para ir mais rápido, me alerte do risco antes de seguir.
+
+## Os 38 itens
+
+${lista}
+
+---
+Checklist compilado por Ana Menires a partir das preocupações de segurança mais recorrentes no mercado, organizado com apoio de IA. Não substitui a revisão de um especialista em segurança.
+Palestra "Selfware: reinventei a roda (e faria de novo)", DevFest Fortaleza 2026 · anamenires.com.br
+`;
+}
+
+const MODELOS = [
+  {tag:"Documento 1", t:"Regras de negócio", d:"As regras que o sistema precisa respeitar. Vem com guia de escrita, 9 tipos de regra, um exemplo com 12 regras, perguntas para levantar as regras e pedidos prontos para a IA.",
+   dica:"Uma regra por linha. Se você precisa explicar com \"depende\", ainda são duas regras.", arq:"regras-de-negocio.md", pdf:"modelo-regras-de-negocio.pdf",
+   md:`# Regras de negócio: [nome do sistema]
+
+> As regras que o sistema precisa respeitar, numeradas. Este documento transforma o jeito como a sua empresa funciona em algo que a IA consegue seguir sem chutar.
+
+## 1. O que é (e o que não é) uma regra de negócio
+
+Uma regra de negócio descreve **como a empresa funciona**, independente de tecnologia. Ela continuaria valendo se o sistema fosse uma planilha ou um caderno.
+
+| É regra de negócio | Não é regra de negócio |
+| --- | --- |
+| "Só o gestor aprova orçamentos acima de R$ 5.000." | "O botão de aprovar fica verde." (é design) |
+| "Todo pedido precisa ter um cliente vinculado." | "Usar Supabase como banco." (é decisão técnica) |
+| "Um contrato de 20 horas não pode passar de 20 horas sem aviso." | "A tela de cliente tem três abas." (é funcionalidade) |
+
+**Por que isso importa com IA:** se a regra não está escrita, a IA inventa uma. E cada conversa nova pode inventar uma diferente.
+
+## 2. Como escrever uma boa regra
+
+**Fórmula:** **[Quem]** + **[pode / deve / não pode]** + **[fazer o quê]** + **[em qual condição]**.
+
+> Exemplo: "O **atendimento** **deve** **registrar o motivo** **sempre que pedir ajuste em uma entrega**."
+
+Uma boa regra é:
+
+- **Única:** uma regra por linha. Se você precisa de "e" ou "depende", provavelmente são duas.
+- **Verificável:** dá para testar se o sistema cumpre ou não.
+- **Sem tecnologia:** fala do negócio, não de tela, banco ou código.
+- **Com motivo:** o "por quê" evita que alguém (ou a IA) remova a regra sem entender.
+- **Com exceções explícitas:** se existe exceção, ela fica escrita na mesma linha.
+
+## 3. Tipos de regra (use como lista para não esquecer nenhuma área)
+
+| Tipo | Pergunta que ela responde | Exemplo |
+| --- | --- | --- |
+| Acesso | Quem pode entrar e o que cada um vê? | Novos usuários só entram após aprovação do dono. |
+| Validação | O que é obrigatório para algo existir? | Todo pedido precisa de setor de destino. |
+| Fluxo e status | Por quais etapas algo passa e quem move? | Um pedido só vai para "Concluído" depois da revisão. |
+| Cálculo | Como um número é calculado? | Horas consumidas = soma do tempo cronometrado nas tarefas do cliente. |
+| Prazo e tempo | O que acontece com o passar do tempo? | Cronômetro esquecido é encerrado após 10 horas. |
+| Limites | Qual é o máximo ou o mínimo permitido? | Contrato de horas avisa ao atingir 80% do total. |
+| Notificação | Quem é avisado e quando? | O responsável é avisado quando o prazo vence amanhã. |
+| Exclusão e retenção | O que pode ser apagado e se tem volta? | Itens excluídos ficam 30 dias na lixeira. |
+| Auditoria | O que precisa ficar registrado? | Toda mudança de permissão fica no histórico. |
+
+## 4. Modelo para preencher
+
+| Nº | Tipo | Regra | Por quê | Exceções | Como testar | Dono da regra |
+| --- | --- | --- | --- | --- | --- | --- |
+| RN01 | [Acesso] | [Quem + pode/deve/não pode + o quê + condição] | [Motivo] | [Nenhuma / quais] | [Como verificar que funciona] | [Quem decide] |
+| RN02 | [Validação] | | | | | |
+| RN03 | [Fluxo] | | | | | |
+| RN04 | [Cálculo] | | | | | |
+| RN05 | [Prazo] | | | | | |
+| RN06 | [Limite] | | | | | |
+| RN07 | [Notificação] | | | | | |
+| RN08 | [Exclusão] | | | | | |
+
+## 5. Exemplo preenchido
+
+**Empresa fictícia:** Estúdio Norte, prestadora de serviços de design e marketing com contratos de horas mensais.
+
+| Nº | Tipo | Regra | Por quê | Exceções | Como testar |
+| --- | --- | --- | --- | --- | --- |
+| RN01 | Acesso | Qualquer pessoa pode pedir uma conta, mas só entra depois que o dono aprova. | Evitar acesso de quem não é da equipe. | Nenhuma. | Criar conta nova e confirmar que ela não vê nada antes da aprovação. |
+| RN02 | Acesso | Membros veem todos os clientes, mas só editam os clientes em que são responsáveis. | Todos precisam consultar; poucos precisam alterar. | Administradores editam todos. | Entrar como membro e tentar editar um cliente de outra pessoa. |
+| RN03 | Validação | Todo pedido precisa de cliente e setor de destino. Sem eles, não salva. | Nenhum pedido fica sem dono. | Nenhuma. | Tentar salvar pedido sem setor. |
+| RN04 | Fluxo | O pedido segue: Novo, Em andamento, Revisão, Concluído. Só quem abriu ou um administrador conclui. | Garantir que alguém confere a entrega. | Nenhuma. | Tentar concluir pedido como membro que não abriu. |
+| RN05 | Fluxo | Pedir ajuste na revisão exige escrever o motivo e devolve o pedido para "Em andamento". | Evitar ajustes sem contexto. | Nenhuma. | Pedir ajuste sem motivo e confirmar o bloqueio. |
+| RN06 | Prazo e tempo | Cada pessoa cronometra o próprio tempo em cada tarefa. | Saber quanto cada cliente consome do contrato. | Nenhuma. | Cronometrar em duas contas e conferir que os tempos não se misturam. |
+| RN07 | Prazo e tempo | Cronômetro aberto por mais de 10 horas é encerrado sozinho. | Evitar horas fantasmas no contrato. | Nenhuma. | Simular cronômetro de 10 horas. |
+| RN08 | Cálculo | Horas consumidas do cliente = soma do tempo cronometrado nas tarefas dele no mês. | Comparar com as horas contratadas. | Tarefas internas não contam. | Somar manualmente e comparar com o sistema. |
+| RN09 | Limite | Ao atingir 80% das horas contratadas no mês, o gestor é avisado. | Agir antes de estourar o contrato. | Clientes sem contrato de horas. | Lançar horas até 80% e conferir o aviso. |
+| RN10 | Notificação | O responsável é avisado um dia antes do prazo de cada tarefa. | Reduzir atrasos. | Tarefas sem prazo. | Criar tarefa com prazo para amanhã. |
+| RN11 | Exclusão | Itens excluídos ficam 30 dias na lixeira. Só o dono apaga de vez. | Nada some por engano. | Nenhuma. | Excluir, restaurar e conferir que nada se perdeu. |
+| RN12 | Auditoria | Toda mudança de permissão de usuário fica registrada com quem fez e quando. Ninguém apaga esse registro. | Rastrear acessos indevidos. | Nenhuma. | Mudar uma permissão e conferir o registro. |
+
+## 6. Perguntas para descobrir as regras
+
+Faça estas perguntas para quem vive o processo (gestor, atendimento, equipe):
+
+1. Quem pode fazer cada coisa hoje? E quem **não pode**?
+2. O que acontece quando alguém esquece um passo?
+3. Quais informações são obrigatórias para começar um trabalho?
+4. Por quais etapas um pedido passa até ficar pronto? Quem move entre elas?
+5. Quais números a gestão acompanha? Como cada um é calculado?
+6. Existe algum limite (horas, valores, quantidade) que não pode ser ultrapassado?
+7. Quem precisa ser avisado, e quando?
+8. O que pode ser apagado? Pode ser recuperado depois?
+9. Que erro já aconteceu e não pode se repetir?
+10. Quais são as exceções que "todo mundo sabe", mas ninguém escreveu?
+
+## 7. Erros comuns
+
+| Erro | Exemplo | Como corrigir |
+| --- | --- | --- |
+| Regra vaga | "O sistema deve ser seguro." | Dizer quem pode o quê: "Só administradores exportam dados." |
+| Duas regras em uma | "O membro cria e aprova pedidos, menos os grandes." | Separar em RN para criar, RN para aprovar e RN para a exceção. |
+| Regra técnica | "Usar tabela de pedidos com chave estrangeira." | Dizer o negócio: "Todo pedido pertence a um cliente." |
+| Exceção escondida | A regra vale "sempre", mas o dono pula quando quer. | Escrever a exceção na coluna própria. |
+| Sem motivo | Ninguém lembra por que a regra existe. | Preencher o "Por quê", mesmo que curto. |
+
+## 8. Pedidos prontos para a IA
+
+**Para escrever as regras com você:**
+> "Vou criar um sistema para [descreva em 2 frases]. Me entreviste, uma pergunta por vez, para levantar as regras de negócio usando os tipos: acesso, validação, fluxo, cálculo, prazo, limites, notificação, exclusão e auditoria. Se eu não souber, me dê 2 opções. Não invente regras. No fim, me entregue a tabela com Nº, Tipo, Regra, Por quê, Exceções e Como testar."
+
+**Para revisar antes de codar:**
+> "Leia estas regras de negócio e me aponte: regras vagas, regras com duas ideias, contradições entre elas, exceções que parecem faltar e áreas sem nenhuma regra. Não escreva código ainda."
+
+**Para transformar em testes:**
+> "Para cada regra, escreva critérios de aceite no formato: Dado [situação], quando [ação], então [resultado esperado]."
+
+## 9. Revisão final (antes de pedir o primeiro código)
+
+- [ ] Cada regra tem um número e uma ideia só.
+- [ ] Todos os tipos da seção 3 foram pensados, mesmo que alguns não se apliquem.
+- [ ] Cada regra tem motivo e forma de testar.
+- [ ] As exceções estão escritas, não só na cabeça de alguém.
+- [ ] Quem vive o processo leu e concordou.
+- [ ] As regras estão salvas junto do projeto, e a IA vai lê-las antes de codar.
+
+## 10. Dúvidas em aberto
+
+- [ ]
+
+## Histórico de versões
+
+| Versão | Data | O que mudou |
+| --- | --- | --- |
+| 1.0 | [data] | Primeira versão |
+`},
+  {tag:"Documento 2", t:"Matriz de permissões", d:"Quem pode ver, criar, editar e apagar cada coisa. É aqui que mora a segurança do sistema.",
+   dica:"Comece fechado: na dúvida, \"Não\". Liberar depois é fácil; retirar um acesso que já vazou, não.", arq:"matriz-de-permissoes.md", pdf:"modelo-matriz-de-permissoes.pdf",
+   md:`# Matriz de permissões: [nome do sistema]
+
+> Uma linha por ação, uma coluna por perfil. As permissões precisam valer no banco de dados, não só na tela: esconder um botão é conforto, bloquear é regra.
+
+| Ação | [Perfil 1] | [Perfil 2] | [Perfil 3] |
+| --- | --- | --- | --- |
+| Ver [registros] | | | |
+| Criar [registro] | | | |
+| Editar [registro] | | | |
+| Apagar [registro] | | | |
+| Aprovar novos usuários | | | |
+| Exportar dados ou backup | | | |
+
+## Exemplo preenchido (empresa fictícia)
+
+| Ação | Membro | Administrador | Dono |
+| --- | --- | --- | --- |
+| Ver clientes | Sim | Sim | Sim |
+| Criar e editar cliente | Não | Sim | Sim |
+| Concluir uma tarefa | Se for responsável | Sim | Sim |
+| Aprovar novos usuários | Não | Não | Sim |
+| Baixar backup | Não | Sim | Sim |
+| Apagar de vez da lixeira | Não | Não | Sim |
+
+## Regras gerais
+- Toda função nova nasce restrita e o acesso é liberado depois, de forma explícita.
+- [Outras regras]
+`},
+  {tag:"Documento 3", t:"Escopo do MVP", d:"O que entra na primeira versão, o que fica de fora e como saber que deu certo. Vem com o método MoSCoW, a chave de liga e desliga, um passo a passo e o exemplo real do Fluxo.",
+   dica:"O campo \"fica de fora\" é o que mais poupa tempo: o que está ali, a IA não tenta construir agora.", arq:"escopo-do-mvp.md", pdf:"modelo-escopo-do-mvp.pdf",
+   md:`# Escopo do MVP: [nome do sistema]
+
+> O que entra na primeira versão, o que fica de fora e como você vai saber que deu certo. É o documento que impede o projeto de crescer sem controle antes de funcionar.
+
+## 1. O que é um MVP (e o que não é)
+
+**MVP** significa *Minimum Viable Product*, ou **Produto Mínimo Viável**. É a menor versão do sistema que **resolve o problema principal de verdade** e permite aprender com o uso real antes de investir em todo o resto.
+
+| É MVP | Não é MVP |
+| --- | --- |
+| A versão que resolve a dor principal, completa e confiável. | Uma versão malfeita ou "quebrada" do produto final. |
+| Poucas funções, cada uma funcionando do começo ao fim. | Todas as funções pela metade. |
+| Um ponto de partida para aprender e decidir o próximo passo. | Um protótipo para jogar fora depois. |
+| Segura desde o primeiro dia. | Uma versão "sem segurança, que a gente arruma depois". |
+
+**Uma imagem que ajuda:** se o objetivo é levar alguém de um lugar a outro, o MVP não é uma roda solta, nem um carro sem motor. É um patinete: simples, mas já leva a pessoa até o destino.
+
+## 2. Por que o escopo importa ainda mais quando você constrói com IA
+
+- **A IA constrói tudo o que você pede.** Ela não vai dizer "isso pode ficar para depois". Sem um escopo escrito, o projeto cresce a cada conversa.
+- **Mais funções = mais pontos de erro e de ataque.** Cada tela nova é uma nova porta para testar, proteger e manter.
+- **O campo "fica de fora" é o que mais poupa tempo.** O que está escrito ali, a IA não tenta construir agora.
+- **Escopo escrito evita retrabalho.** Quando você muda de ideia no meio do caminho, sabe exatamente o que estava combinado e o que mudou.
+
+## 3. Como definir o escopo, passo a passo
+
+1. **Escreva o problema em uma frase.** Se não couber em uma frase, ainda não está claro. Ex.: "A gestão não sabe quantas horas cada cliente consome do contrato."
+2. **Defina o usuário principal.** Quem sente a dor com mais força? A primeira versão é para essa pessoa.
+3. **Desenhe a jornada principal.** O caminho, do início ao fim, que resolve o problema. Ex.: pedido entra → alguém executa → o tempo é registrado → a gestão vê as horas do cliente.
+4. **Liste tudo o que você imagina para o sistema.** Sem filtro. É aqui que as ideias boas e as "legais de ter" aparecem.
+5. **Priorize com o método MoSCoW** (seção 4). Seja duro: em dúvida, vai para "depois".
+6. **Corte.** O MVP é só o que a jornada principal precisa para funcionar e ser segura.
+7. **Defina como vai saber que deu certo.** Um sinal que dá para observar ou medir.
+8. **Escreva o que vem depois.** O que ficou de fora não é esquecido: é planejado.
+
+## 4. Ferramenta de priorização: MoSCoW
+
+| Categoria | Significado | Vai para o MVP? |
+| --- | --- | --- |
+| **Must have** (obrigatório) | Sem isso, a jornada principal não funciona. | Sim |
+| **Should have** (importante) | Agrega muito, mas dá para viver sem por algumas semanas. | Só se sobrar fôlego |
+| **Could have** (desejável) | Seria bom ter, mas não muda o resultado. | Não |
+| **Won't have now** (agora não) | Fica de fora desta versão, de propósito. | Não, vai para "fica de fora" |
+
+**Pergunta de corte:** "Se essa função não existir na primeira semana, o problema principal continua sendo resolvido?" Se a resposta for sim, ela não é do MVP.
+
+## 5. Dica de construção: a chave de liga e desliga
+
+Nem tudo o que fica de fora precisa ser apagado. Uma técnica comum é a **chave de liga e desliga** (em inglês, *feature flag*): a função existe no código, mas fica desligada para os usuários até ser aprovada.
+
+- **Vantagem:** você testa e evolui a função sem expor a equipe a algo incompleto.
+- **Cuidado:** toda função nova deve nascer **desligada e restrita**, e ser liberada de forma explícita.
+- **Peça para a IA:** "Crie uma chave de liga e desliga para cada função que não faz parte do MVP. Por padrão, todas desligadas."
+
+## 6. Modelo para preencher
+
+### O problema
+[O problema em uma frase]
+
+[Como as pessoas se viram hoje, sem o sistema: ferramentas, planilhas, gambiarras]
+
+### Para quem é
+| Perfil | O que precisa | É o usuário principal? |
+| --- | --- | --- |
+| [ ] | [ ] | [Sim / Não] |
+
+### Jornada principal
+[Passo 1] → [Passo 2] → [Passo 3] → [Resultado]
+
+### Entra na primeira versão (Must have)
+| Parte | O que faz | Problema que resolve |
+| --- | --- | --- |
+| [ ] | [ ] | [ ] |
+
+### Fica de fora desta versão (Won't have now)
+| Parte | Por que ficou de fora | Quando volta |
+| --- | --- | --- |
+| [ ] | [ ] | [Depois dos testes / Versão 2 / Sem data] |
+
+### Como saber que deu certo
+| Sinal de sucesso | Como medir | Meta |
+| --- | --- | --- |
+| [ ] | [ ] | [ ] |
+
+### Riscos e premissas
+- **Premissa:** [o que você está supondo que é verdade. Ex.: a equipe vai registrar o tempo todos os dias]
+- **Risco:** [o que pode dar errado e o plano. Ex.: baixa adesão; treinamento na primeira semana]
+
+### Plano de testes
+- **Quem testa:** [ ]
+- **Por quanto tempo:** [ ]
+- **O que precisa funcionar para sair do teste:** [ ]
+
+### O que vem depois
+| Ordem | Função | Condição para entrar |
+| --- | --- | --- |
+| 1 | [ ] | [ ] |
+
+### Dúvidas em aberto
+
+- [ ]
+
+## 7. Exemplo na prática: o Fluxo
+
+> O Fluxo é a plataforma de gestão que estou construindo com IA para substituir o Trello e o ClickUp em uma agência de marketing. **Ele está entrando em fase de testes e ainda não está em operação.** Este exemplo mostra como o escopo foi pensado, não resultados de uso.
+
+### O problema
+A gestão não conseguia saber quantas horas e quanto da equipe cada cliente consumia do contrato.
+
+Antes, tudo estava espalhado: orçamentos em uma planilha, acompanhamento de tráfego em outra e demandas divididas entre ClickUp e Trello. Clientes passavam das horas contratadas sem que ninguém conseguisse enxergar quanto, e a sobrecarga da equipe era percebida, mas não comprovada.
+
+### Para quem é
+| Perfil | O que precisa | Usuário principal? |
+| --- | --- | --- |
+| Gestão (dono e administradores) | Ver horas por cliente, carga da equipe e todas as demandas em um só lugar | Sim |
+| Equipe (membros dos setores) | Receber pedidos organizados e registrar o próprio tempo | Sim |
+| Clientes da agência | Aprovar propostas sem precisar de login | Não (uso pontual) |
+
+### Jornada principal
+Pedido entra na Central → vai para o setor responsável → cada pessoa cronometra o próprio tempo → a entrega passa por revisão → a gestão vê as horas consumidas na ficha do cliente.
+
+### Entra na primeira versão
+| Parte | O que faz | Dor que responde |
+| --- | --- | --- |
+| Central de chamados | Recebe todos os pedidos, distribui para os setores e acompanha até a revisão | Demandas espalhadas entre ClickUp e Trello |
+| Setores e quadros | Quadros Kanban, lista e calendário por setor | Cada setor com sua própria ferramenta |
+| Clientes | Ficha com contrato, tráfego, verba e horas dedicadas | Planilhas soltas e horas contratadas estourando sem visibilidade |
+| Administrador | Equipe, permissões, carga de trabalho por pessoa e registro de auditoria | Sobrecarga da equipe sem visualização |
+| Arquivados, lixeira e backup | Guardar, restaurar e exportar dados; exclusão definitiva só pelo dono | Medo de perder informação |
+| Integração com IA | A IA consulta o sistema com as permissões da própria pessoa e, por padrão, só lê | Consultas rápidas sem abrir várias telas |
+
+### Fica de fora desta versão (desligado por chave)
+| Parte | Por que ficou de fora |
+| --- | --- |
+| Painel de performance e dashboard de métricas | Primeiro é preciso ter dados confiáveis registrados no dia a dia |
+| Mensagens internas | A equipe já tem canal de conversa; não é a dor principal |
+| Espaço pessoal (cards e lembretes individuais) | Não resolve a dor da gestão |
+| Mural da equipe (ausências, aniversários) | Desejável, não obrigatório |
+| Automações por coluna | Automatizar antes de o processo estar estável gera erro em escala |
+| Envio de campanhas entre setores | Depende de o fluxo básico estar validado |
+| Conexão de programas externos de IA pelo perfil | Mais uma porta de acesso; entra só depois da auditoria |
+
+Todas essas funções **existem no código e continuam com testes automáticos**, mas ficam desligadas até serem aprovadas.
+
+### Como vamos saber que deu certo (metas, não resultados)
+| Sinal de sucesso | Como medir |
+| --- | --- |
+| A gestão vê as horas consumidas por cliente contra as horas contratadas | Ficha do cliente atualizada sem planilha paralela |
+| Todas as demandas passam por um só lugar | Nenhum pedido novo aberto no ClickUp ou no Trello |
+| A sobrecarga da equipe fica visível | Carga de trabalho por pessoa consultada nas reuniões de gestão |
+
+### O que ficou parcial (e a gente assume)
+O acompanhamento do desenvolvimento de cada pessoa era um desejo da gestão. Na primeira versão, ele aparece só em parte, pela carga de trabalho. O painel completo ficou para depois dos testes.
+
+### Antes de entrar em operação
+1. Fase de testes com a equipe.
+2. Auditoria de uma equipe especializada em cibersegurança.
+3. Só então a troca completa do ClickUp e do Trello.
+
+## 8. Erros comuns
+
+| Erro | Por que é um problema | Como evitar |
+| --- | --- | --- |
+| MVP com "só mais uma coisinha" | O escopo cresce e a primeira versão nunca fica pronta | Toda função nova passa pela pergunta de corte |
+| Cortar segurança para ir mais rápido | Uma versão insegura não é mínima viável, é um risco | Segurança é sempre Must have |
+| Não escrever o que fica de fora | A IA (e a equipe) vão tentar construir | Preencher a tabela "fica de fora" com o motivo |
+| Sucesso sem medida | Ninguém sabe dizer se deu certo | Pelo menos um sinal observável por objetivo |
+| Automatizar um processo que ainda muda | Erros passam a acontecer em escala | Automatizar só depois de o processo estabilizar |
+| Esquecer quem vai usar | O sistema resolve o problema de quem construiu, não de quem usa | Validar a jornada com o usuário principal |
+
+## 9. Pedidos prontos para a IA
+
+**Para definir o escopo com você:**
+> "Vou criar um sistema para [descreva em 2 frases]. Me entreviste, uma pergunta por vez, para definir o escopo do MVP: o problema em uma frase, o usuário principal, a jornada principal e a lista de funções. Depois, classifique as funções com o método MoSCoW e me mostre o que entra, o que fica de fora e por quê. Não escreva código."
+
+**Para cortar o excesso:**
+> "Leia este escopo e aponte tudo o que não é necessário para a jornada principal funcionar. Para cada item, diga se pode ficar para depois e qual o risco de cortá-lo."
+
+**Para construir respeitando o escopo:**
+> "Construa apenas o que está em 'Entra na primeira versão'. Para cada item de 'Fica de fora', não escreva nada agora. Se eu pedir algo fora do escopo, me avise antes de fazer."
+
+## 10. Revisão final (antes de pedir o primeiro código)
+
+- [ ] O problema cabe em uma frase.
+- [ ] O usuário principal está definido.
+- [ ] A jornada principal funciona do começo ao fim só com o que está no MVP.
+- [ ] Toda função passou pela pergunta de corte.
+- [ ] A tabela "fica de fora" tem motivo para cada item.
+- [ ] Segurança está no MVP, não no "depois".
+- [ ] Existe pelo menos um sinal de sucesso que dá para medir.
+- [ ] Quem vai usar leu e concordou.
+
+## Histórico de versões
+
+| Versão | Data | O que mudou |
+| --- | --- | --- |
+| 1.0 | [data] | Primeira versão |
+`}
+];
+
+const iconeCopiar = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+const iconeBaixar = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>';
+const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+document.getElementById('modelos-lista').innerHTML = MODELOS.map((m, i) => `
+  <article class="modelo">
+    <span class="tag">${m.tag}</span>
+    <h3>${m.t}</h3>
+    <p>${m.d}</p>
+    <div class="dica">${m.dica}</div>
+    <details><summary>Ver o modelo</summary><pre>${esc(m.md)}</pre></details>
+    <div class="btns">
+      <a class="btn btn-roxo" href="${m.pdf}" download>${iconeBaixar}Baixar PDF</a>
+      <button class="btn btn-linha" type="button" data-acao="copiar-modelo" data-i="${i}">${iconeCopiar}Copiar</button>
+    </div>
+    <button class="link-md" type="button" data-acao="baixar-modelo" data-i="${i}">Baixar em Markdown (.md)</button>
+  </article>`).join('');
+
+const toast = document.getElementById('toast');
+let tt;
+function aviso(msg) { toast.textContent = msg; toast.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('on'), 2400); }
+
+async function copiar(texto, msg) {
+  try { await navigator.clipboard.writeText(texto); }
+  catch (e) {
+    const ta = document.createElement('textarea'); ta.value = texto; ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e2) { aviso('Não deu para copiar. Use o botão Baixar.'); ta.remove(); return; }
+    ta.remove();
+  }
+  aviso(msg);
+}
+function baixar(texto, nome) {
+  const url = URL.createObjectURL(new Blob([texto], {type:'text/markdown;charset=utf-8'}));
+  const a = document.createElement('a'); a.href = url; a.download = nome; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  aviso('Download iniciado');
+}
+
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-acao]'); if (!b) return;
+  const m = MODELOS[b.dataset.i];
+  switch (b.dataset.acao) {
+    case 'copiar-checklist': copiar(textoChecklist(), 'Copiado! Cole no início da conversa com a IA'); break;
+    case 'baixar-checklist': baixar(textoChecklist(), 'checklist-seguranca-38-itens.md'); break;
+    case 'copiar-modelo': copiar(m.md, `Modelo "${m.t}" copiado`); break;
+    case 'baixar-modelo': baixar(m.md, m.arq); break;
+  }
+});
+</script>
+</body>
+</html>
