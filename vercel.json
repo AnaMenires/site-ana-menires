@@ -1,4 +1,5 @@
 {
+  "buildCommand": "node scripts/inject-analytics.mjs",
   "cleanUrls": true,
   "headers": [
     {
