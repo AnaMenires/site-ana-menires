@@ -847,6 +847,9 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 
 .chips.stack{margin-top:22px}
 .demo-note{margin-top:10px;font-size:.8rem;color:var(--muted)}
+
+.tm-link{justify-self:start;color:#F5B83D;font-weight:600;font-size:.88rem;text-decoration:underline;text-underline-offset:3px}
+.tm-link:hover{color:#F8F6FC}
 </style>
 </head>
 <body>
@@ -1384,18 +1387,30 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 
     <button class="talk-btn" type="button" data-talk="0" aria-haspopup="dialog">
       <div class="stage-main">
-        <video src="assets/video/palestra-gittogether.mp4" poster="assets/img/palestra-gittogether-poster.webp" muted loop playsinline preload="none" data-auto aria-hidden="true"></video>
-        <span class="live"><i></i>No palco</span>
+        <video src="assets/video/palestra-devfest.mp4" poster="assets/img/palestra-devfest-poster.webp" muted loop playsinline preload="none" data-auto aria-hidden="true"></video>
+        <span class="live"><i></i>Mais recente</span>
         <div class="stage-cap">
-          <p class="label">GitTogether · Unifor · out 2025</p>
-          <h3>Da ideia ao deploy</h3>
-          <p>Como a IA acelera o aprendizado e transforma insights em projetos reais. Encontro da comunidade GTC Fortaleza, com apoio da Unifor.</p>
+          <p class="label">DevFest Fortaleza 2026 · UNI7 · nov 2026</p>
+          <h3>Selfware: reinventei a roda (e faria de novo)</h3>
+          <p>Como uma agência está trocando o Trello por software sob medida construído com IA. Palestra no DevFest Fortaleza, organizado pelo GDG Fortaleza.</p>
           <span class="more-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Ver detalhes do evento</span>
         </div>
       </div>
     </button>
 
     <button class="talk-btn" type="button" data-talk="1" aria-haspopup="dialog">
+      <div class="stage-row">
+        <div class="thumb"><img decoding="async" src="assets/img/palestra-gittogether-poster.webp" alt="" width="540" height="960" loading="lazy"></div>
+        <div>
+          <p class="label">GitTogether · Unifor · out 2025</p>
+          <h3>Da ideia ao deploy</h3>
+          <p class="d">Como a IA acelera o aprendizado e transforma insights em projetos reais. Encontro da comunidade GTC Fortaleza, com apoio da Unifor.</p>
+        </div>
+        <span class="more-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Ver detalhes</span>
+      </div>
+    </button>
+
+    <button class="talk-btn" type="button" data-talk="2" aria-haspopup="dialog">
       <div class="stage-row">
         <div class="thumb"><img decoding="async" src="assets/img/palestra-housejs.webp" alt="" width="700" height="891" loading="lazy"></div>
         <div>
@@ -1421,7 +1436,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
   <div class="tm-wrap">
     <div class="tm-media" id="tm-media"></div>
     <div class="tm-top">
-      <span class="tm-count" id="tm-count">Palestra 01 / 02</span>
+      <span class="tm-count" id="tm-count">Palestra 01 / 03</span>
       <div class="tm-ctrls">
         <button class="tm-btn" type="button" id="tm-prev" aria-label="Palestra anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
         <button class="tm-btn" type="button" id="tm-next" aria-label="Próxima palestra"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
@@ -1432,6 +1447,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
       <p class="tm-event" id="tm-event"></p>
       <h3 id="tm-title"></h3>
       <p class="tm-desc" id="tm-desc"></p>
+      <a class="tm-link" id="tm-link" href="/evento-gdg" hidden></a>
       <ul class="tm-facts" id="tm-facts"></ul>
     </div>
   </div>
@@ -1440,6 +1456,11 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
 <script>
 (function(){
   var talks=[
+    {event:"DevFest Fortaleza 2026 · GDG Fortaleza", title:"Selfware: reinventei a roda (e faria de novo)",
+     desc:"Como uma agência está trocando o Trello por software sob medida construído com IA.",
+     media:{type:"video", src:"assets/video/palestra-devfest.mp4", poster:"assets/img/palestra-devfest-poster.webp", pos:"50% 40%"},
+     facts:[["Data","14 de novembro de 2026"],["Horário","14h30 às 15h20"],["Local","UNI7, Mini Auditório 1 · Fortaleza"],["Realização","GDG Fortaleza (Google Developer Groups)"]],
+     link:{href:"/evento-gdg", text:"Ver o kit da palestra e os slides"}},
     {event:"GitTogether · Edição Outubro 2025", title:"Da ideia ao deploy: como a IA acelera o aprendizado e transforma insights em projetos reais",
      desc:"Encontro da comunidade GTC Fortaleza, com palestras e networking para quem gosta de aprender e trocar ideias sobre tecnologia.",
      media:{type:"video", src:"assets/video/palestra-gittogether.mp4", poster:"assets/img/palestra-gittogether-poster.webp", pos:"50% 40%"},
@@ -1468,6 +1489,7 @@ a.fitem:hover{background:rgba(217,200,245,.07);border-color:rgba(217,200,245,.5)
     document.getElementById('tm-event').textContent=t.event;
     document.getElementById('tm-title').textContent=t.title;
     document.getElementById('tm-desc').textContent=t.desc;
+    var lk=document.getElementById('tm-link'); if(t.link){lk.href=t.link.href;lk.textContent=t.link.text+' →';lk.hidden=false;}else{lk.hidden=true;}
     var ul=document.getElementById('tm-facts'); ul.replaceChildren();
     t.facts.forEach(function(f){
       var li=document.createElement('li');
