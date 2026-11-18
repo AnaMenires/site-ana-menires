@@ -53,6 +53,9 @@ a{color:inherit}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
 .label{font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--bg);color:var(--accent);padding:10px 16px;border-radius:8px;z-index:100;font-weight:500}
+.skip:focus{left:12px;outline:2px solid var(--amber);outline-offset:2px}
+.num,.stat .n,.porano b,.quem-fatos strong{font-variant-numeric:lining-nums tabular-nums}
 section[id]{scroll-margin-top:16px}
 
 /* Topo */
@@ -187,7 +190,7 @@ thead th:first-child{text-align:left}
 .wa-flutuante svg{width:30px;height:30px;flex:none;margin:0 14px}
 .wa-txt{max-width:0;overflow:hidden;white-space:nowrap;opacity:0;font-weight:500;font-size:.95rem;transition:max-width .25s ease,opacity .2s ease,padding .25s ease}
 .wa-flutuante:hover .wa-txt,.wa-flutuante:focus-visible .wa-txt{max-width:170px;opacity:1;padding-left:20px}
-@media (hover:none){.wa-flutuante:hover .wa-txt{max-width:0;opacity:0;padding:0}}
+.wa-flutuante.mostrar .wa-txt{max-width:170px;opacity:1;padding-left:20px}
 @media (prefers-reduced-motion: reduce){.wa-txt,.wa-flutuante,.btn-hero.destaque{transition:none}}
 
 
@@ -220,13 +223,13 @@ thead th:first-child{text-align:left}
 @media (max-width:900px){ .nav{display:none} }
 @media (max-width:560px){ .por-que{grid-template-columns:1fr} .stat{padding:18px 16px} }
 @media (max-width:400px){ .brand b{font-size:1.15rem} .btn-top{padding:7px 14px} }
+@media (max-width:360px){ .brand b{display:none} .btn-hero.destaque{white-space:normal;padding:14px 14px 14px 22px;font-size:.95rem;gap:10px} }
 @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} }
-
-.num,.stat .n,.porano b,.quem-fatos strong{font-variant-numeric:lining-nums tabular-nums}
 </style>
 <script src="/assets/js/analytics.js"></script>
 </head>
 <body>
+<a class="skip" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="hero">
   <div class="wrap">
@@ -258,7 +261,7 @@ thead th:first-child{text-align:left}
   </div>
 </header>
 
-<main>
+<main id="conteudo">
 
 <section class="sec" id="numeros" aria-labelledby="num-t">
   <div class="wrap">
@@ -430,7 +433,7 @@ thead th:first-child{text-align:left}
       <div>
         <p class="label">Quem sou eu</p>
         <h2 id="quem-t"><span class="num">8</span> anos de tráfego pago, com visão 360.</h2>
-        <p>Sou Ana Menires, publicitária. Tenho <b>8 anos</b> de experiência em tráfego pago e em <b>diversos segmentos</b>, com conhecimento amplo da área, <b>experiência técnica e comercial</b> e uma visão 360 do negócio: do anúncio ao site, da medição ao resultado. Também coordeno uma equipe de tráfego pago.</p>
+        <p>Sou Ana Menires, publicitária. Tenho <b>8 anos</b> de experiência em tráfego pago e em <b>diversos segmentos</b>, com conhecimento amplo da área, <b>experiência técnica e comercial</b> e uma visão 360 do negócio: do anúncio ao site, da medição ao resultado. Você fala comigo, e tem uma equipe por trás do trabalho. A sua conta recebe atenção exclusiva e não fica numa fila.</p>
         <div class="quem-fatos">
           <div><strong>8 anos</strong><span>em tráfego pago</span></div>
           <div><strong>Diversos segmentos</strong><span>de saúde a comércio e serviços</span></div>
@@ -448,5 +451,6 @@ thead th:first-child{text-align:left}
   <span class="wa-txt">Vamos conversar</span>
 </a>
 
+<script src="/assets/js/wa-flutuante.js" defer></script>
 </body>
 </html>
