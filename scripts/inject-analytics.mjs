@@ -1,11 +1,13 @@
 // Roda no build da Vercel (vercel.json > buildCommand).
-// Garante que TODA página .html do site carregue /assets/js/analytics.js,
+// Garante que TODA página .html do site tenha o Google Tag Manager (snippets oficiais
+// no <head> e no <body>, ver gtm-snippets.mjs) e carregue /assets/js/analytics.js,
 // inclusive páginas novas criadas no futuro. Remove o trecho antigo do
 // Google Analytics escrito dentro da página, se ainda existir.
 // Depois copia o site pronto para a pasta "public", que é o que a Vercel publica
 // (arquivos internos, como este script e o CLAUDE.md, ficam de fora).
 import { readdirSync, readFileSync, writeFileSync, statSync, rmSync, cpSync } from 'node:fs';
 import { join } from 'node:path';
+import { instalarGTM } from './gtm-snippets.mjs';
 
 const TAG = '<script src="/assets/js/analytics.js"></script>';
 const IGNORAR = new Set(['.git', 'node_modules', '.vercel', 'scripts', 'public']);
@@ -26,13 +28,15 @@ const todas = paginas('.');
 for (const arquivo of todas) {
   const original = readFileSync(arquivo, 'utf8');
   let html = original.replace(ANTIGO, '\n');
+  html = instalarGTM(html);
   if (!html.includes(TAG)) {
     html = html.includes('</head>') ? html.replace('</head>', `${TAG}\n</head>`) : `${TAG}\n${html}`;
   }
-  if (html !== original) { writeFileSync(arquivo, html); alteradas++; console.log('analytics:', arquivo); }
+  if (html !== original) { writeFileSync(arquivo, html); alteradas++; console.log('analytics/gtm:', arquivo); }
 }
 console.log(`analytics: ${todas.length} páginas verificadas, ${alteradas} ajustadas.`);
 
+if (process.argv.includes('--so-paginas')) process.exit(0);
 rmSync('public', { recursive: true, force: true });
 for (const nome of readdirSync('.')) {
   if (!NAO_PUBLICAR.has(nome)) cpSync(nome, join('public', nome), { recursive: true });

@@ -1,9 +1,9 @@
 /*
- * Google Analytics e Google Tag Manager de todo o site anamenires.com.br.
- * Este é o ÚNICO lugar com os IDs: para trocar, mude só aqui.
- *   ID      = Google Analytics 4 (visitas e eventos data-acao)
- *   GTM_ID  = contêiner do Google Tag Manager (conversões e outras tags)
- * Atenção: o GA4 já é carregado aqui. Não crie no GTM outra tag de
+ * Google Analytics 4 de todo o site anamenires.com.br.
+ * Este é o ÚNICO lugar com o ID de medição: para trocar o ID, mude só aqui.
+ * O Google Tag Manager (GTM-NJSTGJQS) NÃO fica aqui: ele entra em cada página
+ * no formato oficial do Google (ver scripts/gtm-snippets.mjs).
+ * Atenção: como o GA4 já é carregado aqui, não crie no GTM outra tag de
  * "configuração do Google" com o mesmo G-YSLKBHC7CD, senão as visitas contam em dobro.
  * Cada página carrega este arquivo com:
  *   <script src="/assets/js/analytics.js"></script>
@@ -12,16 +12,6 @@
  */
 (function () {
   var ID = 'G-YSLKBHC7CD';
-  var GTM_ID = 'GTM-NJSTGJQS';
-
-  // Google Tag Manager
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-  var gtm = document.createElement('script');
-  gtm.async = true;
-  gtm.src = 'https://www.googletagmanager.com/gtm.js?id=' + GTM_ID;
-  document.head.appendChild(gtm);
-
   var tag = document.createElement('script');
   tag.async = true;
   tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + ID;
